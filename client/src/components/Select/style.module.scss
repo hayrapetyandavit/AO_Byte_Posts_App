@@ -1,0 +1,101 @@
+@import "../../style/variables";
+
+.list {
+  position: relative;
+  width: 240px;
+  text-transform: capitalize;
+  cursor: pointer;
+
+  input[type="radio"] {
+    position: absolute;
+    left: -9999px;
+  }
+
+  input[type="radio"] + span {
+    width: 100%;
+    color: $black-light;
+    padding: 5px 20px;
+    display: block;
+    text-align: center;
+    box-sizing: border-box;
+    background: rgba(225, 226, 226, 0.2);
+    cursor: pointer;
+  }
+
+  input[type="radio"]:checked + span {
+    background: $purple-font;
+    position: absolute;
+    top: 0;
+    color: $white;
+    border-radius: 4px;
+  }
+
+  .darkMode[type="radio"] + span {
+    color: #fff;
+  }
+
+  .darkMode[type="radio"]:hover + span {
+    color: $black-light;
+  }
+
+  &:hover .title {
+    border-radius: 4px 4px 0 0;
+  }
+
+  &:hover .content input[type="radio"] + span {
+    position: relative;
+    top: 0;
+    transition: all 250ms ease-in-out;
+  }
+
+  &:hover input[type="radio"] + span:hover {
+    background: $grey-light;
+  }
+
+  &:hover input[type="radio"]:checked + span:hover {
+    background: $purple-font;
+  }
+
+  &:hover input[type="radio"]:checked + span {
+    border-radius: 0;
+  }
+
+  &:hover
+    .content
+    label:nth-last-of-type(1)
+    input[type="radio"]:checked
+    + span {
+    border-radius: 0 0 4px 4px;
+  }
+
+  &:hover .content {
+    max-height: 540px;
+  }
+}
+
+.title {
+  width: 100%;
+  display: block;
+  background: $purple-font;
+  text-align: center;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  color: $white;
+  text-shadow: 0 1px 0 #cacaca;
+  border-radius: 4px;
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  padding-top: 40px;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  max-height: 0;
+  transition: all 250ms ease;
+
+  label:nth-last-of-type(1) span {
+    border-radius: 0 0 4px 4px;
+  }
+}

@@ -1,0 +1,24 @@
+@import "../../style/variables";
+
+.content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 120px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 4px;
+  padding: 18px;
+
+  margin-top: 84px;
+  background-color: $white;
+  z-index: 10;
+
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+
+}

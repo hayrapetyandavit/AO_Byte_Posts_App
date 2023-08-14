@@ -1,0 +1,12 @@
+@import "../../style/variables";
+
+.errorMsg {
+  height: 34px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 1.2;
+  margin-bottom: 8px;
+  color: $error-red;
+  visibility: hidden;
+  transition: visibility 0.3s ease;
+}

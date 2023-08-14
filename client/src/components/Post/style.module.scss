@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Tektur:wght@500&display=swap");
+@import "../../style/variables";
+
+.posts {
+  position: relative;
+  width: fit-content;
+  min-height: 0px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  padding: 4px 12px;
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid $grey-light;
+}
+
+.title {
+  font-family: "Tektur", cursive;
+  color: $black-light;
+}
+
+hr {
+  width: 100%;
+  height: 2px;
+  color: $black;
+  box-shadow: 0 0 1px 0 $grey-light;
+}
+
+.text {
+  font-style: 14px;
+  font-weight: 500;
+}
+
+.authorName {
+  color: $grey-dark;
+  border: 1px solid $bg-skeleton-item;
+  border-radius: 8px;
+  padding: 1px 6px 3px;
+  margin: 12px 0 4px;
+  background-color: $bg-skeleton-item;
+  margin-right: 4px;
+  span {
+    margin-left: 4px;
+  }
+}
+
+.btnGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  button {
+    display: flex;
+    align-items: center;
+    height: 34px;
+  }
+}
+
+.deletePost {
+  position: absolute;
+  top: 14px;
+  right: 8px;
+  button {
+    width: 30px;
+    height: 100%;
+    padding: 2px 0 0 0;
+  }
+}
+
+.rate {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  margin-top: 180px;
+}
+
+.title {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end), blink-caret 0.7s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: white;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .content {
+    border: none;
+    box-shadow: none;
+  }
+  .posts {
+    width: 100%;
+  }
+}

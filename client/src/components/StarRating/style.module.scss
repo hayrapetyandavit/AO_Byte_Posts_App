@@ -1,0 +1,21 @@
+@import "../../style/variables";
+
+button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.on {
+  color: $star-yellow;
+}
+
+.off {
+  color: $grey-light;
+}
+
+.star {
+  font-size: 18px;
+  font-weight: 800;
+}

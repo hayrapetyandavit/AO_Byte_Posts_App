@@ -1,0 +1,40 @@
+.content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+  input {
+    height: 10px;
+    letter-spacing: 1.8px;
+    bottom: 20px;
+  }
+  label {
+    transform: translateY(0.3rem);
+  }
+  button {
+    display: flex;
+    align-items: center;
+    height: 34px;
+  }
+}
+
+.btnGroup {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 767.98px) {
+  .content {
+    flex-direction: column;
+  }
+  .btnGroup {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    button {
+      width: 48%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+@import "../../style/variables";
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 84px;
+  padding: 0 35px;
+  background-color: $white;
+  box-shadow: 0 0 14px -0 $purple-shadow;
+  z-index: 12;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerLogo {
+  display: flex;
+  align-items: center;
+  img {
+    width: 75px;
+    height: 45px;
+    cursor: pointer;
+  }
+}
+.userSide {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  .userIcon {
+    transition: all 0.3s ease-out;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  .userLog {
+    color: $black-light;
+  }
+}

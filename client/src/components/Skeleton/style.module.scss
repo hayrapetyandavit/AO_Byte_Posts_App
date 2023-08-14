@@ -1,0 +1,95 @@
+@import "../../style/variables";
+
+.loader {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  div {
+    border-radius: 8px;
+  }
+  margin-bottom: 20px;
+}
+
+.loader:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(
+    110deg,
+    rgba(227, 227, 227, 0) 0%,
+    rgba(227, 227, 227, 0) 40%,
+    rgba(227, 227, 227, 0.5) 50%,
+    rgba(227, 227, 227, 0) 60%,
+    rgba(227, 227, 227, 0) 100%
+  );
+  animation: gradient-animation_2 1.2s linear infinite;
+}
+
+.loader .content {
+  margin-bottom: 20px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 15px;
+  margin: 80px 0 10px;
+  border: 1px solid $grey-light;
+}
+
+.title {
+  width: 40%;
+  height: 35px;
+  margin-bottom: 20px;
+  background-color: $bg-skeleton-item;
+}
+
+.textContent {
+  width: 70%;
+  height: 55px;
+  background-color: $bg-skeleton-item;
+}
+
+.inputGroup {
+  display: flex;
+  background-color: transparent;
+  gap: 12px;
+  .input {
+    width: 24%;
+    height: 34px;
+    border-radius: 4px;
+    background-color: $bg-skeleton-item;
+  }
+  .button {
+    width: 6%;
+    height: 34px;
+    border-radius: 4px;
+    background-color: $bg-skeleton-item;
+  }
+}
+
+.comment {
+  width: 30%;
+  height: 30px;
+  background-color: $bg-skeleton-item;
+}
+
+.star {
+  font-size: 18px;
+  font-weight: 800;
+  margin-right: 4px;
+  color: $bg-skeleton-item;
+}
+
+@keyframes gradient-animation_2 {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
