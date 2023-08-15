@@ -84,12 +84,13 @@ export const fetchCreatePost = createAsyncThunk(
 export const fetchUpdatePost = createAsyncThunk(
   "posts/fetchUpdatePost",
   async (
-    data: { content: string; userId: string; id: string },
+    data: { title: string; content: string; userId: string; id: string },
     { dispatch }
   ) => {
     dispatch({ type: UPDATE_POST });
 
     const response = await updatePostService(
+      data.title,
       data.content,
       data.userId,
       data.id

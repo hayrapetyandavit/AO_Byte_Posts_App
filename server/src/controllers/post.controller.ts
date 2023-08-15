@@ -5,6 +5,19 @@ import { postModelDTO } from "../utils/mongoModelDTO";
 import PostModel from "../models/post.model";
 import UserModel from "../models/user.model";
 
+enum SortByOptions {
+  PostRate = "post rate",
+  CreationDate = "creation date",
+}
+
+async function getUserAndPost(userId: string, postId: string) {
+  const [user, post] = await Promise.all([
+    UserModel.findById(userId),
+    PostModel.findById(postId),
+  ]);
+  return { user, post };
+}
+
 export const getPostsWithPagination = async (req: Request, res: Response) => {
   const page = parseInt(req.query.page as string) || 1;
   const itemsPerPage = 5;
@@ -39,8 +52,8 @@ export const getPostsWithPagination = async (req: Request, res: Response) => {
       },
       {
         $sort: {
-          totalRate: req.query.sortBy === "post rate" ? -1 : 1,
-          createdAt: req.query.sortBy === "creation date" ? -1 : 1,
+          totalRate: req.query.sortBy === SortByOptions.PostRate ? -1 : 1,
+          createdAt: req.query.sortBy === SortByOptions.CreationDate ? -1 : 1,
         },
       },
       {
@@ -109,7 +122,7 @@ export const getPostsAuthors = async (req: Request, res: Response) => {
       }
     }
 
-    res.status(200).json(authors);
+    return res.status(200).json(authors);
   } catch (error) {
     res.status(500).send({ message: "Failed to get posts" });
   }
@@ -142,13 +155,15 @@ export const createPost = async (req: Request, res: Response) => {
 export const updatePost = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const { userId, content } = req.body;
+    const { userId, title, content } = req.body;
 
-    const post = await PostModel.findById(id);
-    const user = await UserModel.findById(userId);
+    const { user, post } = await getUserAndPost(userId, id);
 
     if (user && post) {
-      await PostModel.updateOne({ _id: id }, { content: content });
+      await PostModel.updateOne(
+        { _id: id },
+        { title: title, content: content }
+      );
       res.status(201).send({ message: "Post updated successfully" });
     } else {
       res.status(403).send({ message: "Permission denied" });
@@ -163,8 +178,7 @@ export const deletePost = async (req: Request, res: Response) => {
     const id = req.params.id;
     const { userId } = req.body;
 
-    const post = await PostModel.findById(id);
-    const user = await UserModel.findById(userId);
+    const { user, post } = await getUserAndPost(userId, id);
 
     if (user && post) {
       await PostModel.deleteOne({ _id: id });

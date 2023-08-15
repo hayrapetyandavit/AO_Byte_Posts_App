@@ -14,6 +14,27 @@
   border: 1px solid $grey-light;
 }
 
+.input {
+  width: 100%;
+  min-height: 20px;
+  max-height: 400px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-family: "Tektur", cursive;
+  color: $black-light;
+  font-size: 22px;
+  font-weight: 800;
+  padding: 0;
+  margin-bottom: 6px;
+  &:valid {
+    border: none;
+  }
+}
+
 .textarea {
   width: 100%;
   min-height: 150px;
@@ -26,6 +47,12 @@
   border: none;
   outline: none;
   background-color: transparent;
+  font-family: Barlow, sans-serif;
+  font-style: 14px;
+  font-weight: 500;
+  line-height: 24px;
+
+  padding: 0;
 }
 
 .btnGroup {
@@ -33,7 +60,6 @@
   justify-content: center;
   gap: 10px;
   button {
-    // height: 12px;
     padding: 0.2em 1.8em;
   }
 }

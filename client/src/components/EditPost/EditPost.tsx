@@ -17,18 +17,21 @@ interface IProps {
 const EditPost: FC<IProps> = (props) => {
   const { post, setEditMode } = props;
 
+  const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     setPostContent(post.content);
+    setPostTitle(post.title || "");
   }, [post]);
 
   const hundleSaveButtonClick = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     const data = {
+      title: postTitle,
       content: postContent,
       userId: localStorage.getItem("userId") || "",
       id: e.currentTarget.id,
@@ -43,8 +46,13 @@ const EditPost: FC<IProps> = (props) => {
 
   return (
     <div className={classes.editContent}>
+      <input
+        className={classes.input}
+        type="text"
+        value={postTitle}
+        onChange={(e) => setPostTitle(e.target.value)}
+      />
       <textarea
-        rows={3}
         className={classes.textarea}
         value={postContent}
         onChange={(e) => setPostContent(e.target.value)}

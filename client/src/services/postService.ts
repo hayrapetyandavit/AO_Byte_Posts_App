@@ -102,6 +102,7 @@ export const createPostService = async (data: Omit<PostType, "id">) => {
 };
 
 export const updatePostService = async (
+  title: string,
   content: string,
   userId: string,
   id: string
@@ -112,7 +113,7 @@ export const updatePostService = async (
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ userId, content }),
+    body: JSON.stringify({ userId, title, content }),
   });
   if (!response.ok) {
     const errorMessage = await response.text();
