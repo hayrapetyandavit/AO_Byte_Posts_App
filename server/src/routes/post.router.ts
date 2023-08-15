@@ -1,7 +1,7 @@
 import { Application } from "express";
 
 import { verifyToken } from "../middlewares/verifyToken";
-import refreshToken from "../middlewares/refreshToken";
+import { refreshToken } from "../middlewares/refreshToken";
 
 import {
   updatePost,
@@ -21,10 +21,10 @@ export default (app: Application) => {
     next();
   });
 
-  app.get("/posts", getPostsWithPagination);
-  app.get("/posts/:userId", verifyToken, refreshToken, getPostsByUserId);
-  app.put("/posts/:id", verifyToken, refreshToken, updatePost);
   app.get("/authors", getPostsAuthors);
+  app.get("/posts", getPostsWithPagination);
   app.post("/posts", verifyToken, refreshToken, createPost);
+  app.put("/posts/:id", verifyToken, refreshToken, updatePost);
   app.delete("/posts/:id", verifyToken, refreshToken, deletePost);
+  app.get("/posts/:userId", verifyToken, refreshToken, getPostsByUserId);
 };

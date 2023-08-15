@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 import authConfig from "../config/auth.config";
 
-const refreshToken = (req: Request, res: Response, next: NextFunction) => {
+export const refreshToken = (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.access_token;
 
   if (!token) {
@@ -30,5 +30,3 @@ const refreshToken = (req: Request, res: Response, next: NextFunction) => {
     next();
   });
 };
-
-export default refreshToken;

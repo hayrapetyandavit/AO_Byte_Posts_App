@@ -1,7 +1,7 @@
 import { Application } from "express";
 
 import { verifyToken } from "../middlewares/verifyToken";
-import refreshToken from "../middlewares/refreshToken";
+import { refreshToken } from "../middlewares/refreshToken";
 
 import {
   getAllComments,

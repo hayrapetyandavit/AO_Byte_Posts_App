@@ -1,9 +1,7 @@
 import { Application } from "express";
-import { check } from "express-validator";
 
+import {refreshToken} from "../middlewares/refreshToken";
 import { verifyToken } from "../middlewares/verifyToken";
-import refreshToken from "../middlewares/refreshToken";
-
 import {
   register,
   login,
@@ -13,6 +11,7 @@ import {
   verifyLogin,
   isAuth,
 } from "../controllers/auth.controller";
+import { emailValidation, passwordValidation } from "../utils/validations";
 
 export default (app: Application) => {
   app.use((req, res, next) => {
@@ -23,79 +22,14 @@ export default (app: Application) => {
     next();
   });
   app.post(
-    "/register",
-    [
-      check("email")
-        .isEmail()
-        .withMessage("invalid email address")
-        .normalizeEmail(),
-
-      check("password")
-        .isLength({ min: 8, max: 15 })
-        .withMessage(
-          "your password should have min and max length between 8-15"
-        )
-        .matches(/\d/)
-        .withMessage("your password should have at least one number")
-        .matches(/[!@#$%^&*=(),.|\/?":{}|<>]/)
-        .withMessage("your password should have at least one sepcial character")
-        .matches(/[A-Z]/)
-        .withMessage(
-          "your password should have at least one uppercase character"
-        ),
-    ],
-    register
+    "/reset-password/:token",
+    [emailValidation, passwordValidation],
+    resetPassword
   );
-  app.post(
-    "/login",
-    [
-      check("email")
-        .isEmail()
-        .withMessage("invalid email address")
-        .normalizeEmail(),
-
-      check("password")
-        .isLength({ min: 8, max: 15 })
-        .withMessage(
-          "your password should have min and max length between 8-15"
-        )
-        .matches(/\d/)
-        .withMessage("your password should have at least one number")
-        .matches(/[!@#$%^&*=(),.|\/?":{}|<>]/)
-        .withMessage("your password should have at least one sepcial character")
-        .matches(/[A-Z]/)
-        .withMessage(
-          "your password should have at least one uppercase character"
-        ),
-    ],
-    login
-  );
-  app.post(
-    "/login/:token",
-    [
-      check("email")
-        .isEmail()
-        .withMessage("invalid email address")
-        .normalizeEmail(),
-
-      check("password")
-        .isLength({ min: 8, max: 15 })
-        .withMessage(
-          "your password should have min and max length between 8-15"
-        )
-        .matches(/\d/)
-        .withMessage("your password should have at least one number")
-        .matches(/[!@#$%^&*=(),.|\/?":{}|<>]/)
-        .withMessage("your password should have at least one sepcial character")
-        .matches(/[A-Z]/)
-        .withMessage(
-          "your password should have at least one uppercase character"
-        ),
-    ],
-    verifyLogin
-  );
-  app.post("/forgot-password", forgotPassword);
-  app.post("/reset-password/:token", resetPassword);
-  app.get("/check-session", verifyToken, refreshToken, isAuth);
   app.post("/logout", verifyToken, refreshToken, logout);
+  app.get("/check-session", verifyToken, refreshToken, isAuth);
+  app.post("/forgot-password", [emailValidation], forgotPassword);
+  app.post("/login", [emailValidation, passwordValidation], login);
+  app.post("/register", [emailValidation, passwordValidation], register);
+  app.post("/login/:token", [emailValidation, passwordValidation], verifyLogin);
 };
