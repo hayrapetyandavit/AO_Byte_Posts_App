@@ -52,8 +52,8 @@ export const setDateFilter = createAsyncThunk(
     currentDay.setDate(currentDay.getDate() - daysToAdd);
 
     return {
-      startDate: (new Date()).toISOString(),
-      endDate: currentDay.toISOString(),
+      startDate: currentDay.toISOString(),
+      endDate: (new Date()).toISOString(),
     };
   }
 );

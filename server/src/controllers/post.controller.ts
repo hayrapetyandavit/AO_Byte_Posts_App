@@ -6,7 +6,6 @@ import PostModel from "../models/post.model";
 import UserModel from "../models/user.model";
 
 export const getPostsWithPagination = async (req: Request, res: Response) => {
-  // const queryParamCount = Object.entries(req.query).length;
   const page = parseInt(req.query.page as string) || 1;
   const itemsPerPage = 5;
 

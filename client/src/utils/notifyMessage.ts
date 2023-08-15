@@ -5,7 +5,7 @@ injectStyle();
 
 export const notify = (message: string, configs?: Record<string, unknown>) =>
   toast(message, {
-    position: "top-center",
+    position: "top-right",
     autoClose: 1000,
     hideProgressBar: false,
     closeOnClick: true,

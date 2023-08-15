@@ -1,24 +1,117 @@
 @import "../../style/variables";
 
-.content {
+.content,
+.darkContent {
+  display: none;
   position: fixed;
-  top: 0;
+  top: 84px;
   left: 0;
-  width: 100%;
-  min-height: 120px;
-  display: flex;
-  justify-content: space-between;
-  border-radius: 4px;
-  padding: 18px;
-
-  margin-top: 84px;
+  width: 30%;
+  height: 100%;
   background-color: $white;
-  z-index: 10;
+  box-shadow: 0 0 14px -0 $purple-shadow;
+  transition: all 1000ms ease;
 
+  z-index: 10;
+  .closeIcon {
+    content: "X";
+    position: absolute;
+    top: 4%;
+    left: 96%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    border-radius: 100%;
+    box-shadow: 0 0 14px -0 $purple-shadow;
+    background-color: $white;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  .closeIcon:hover {
+    transform: scale(1.1);
+  }
+}
+
+.darkContent {
+  background-color: $bg-dark;
+  box-shadow: 0 0 14px -0 $purple-shadow;
+  .closeIcon {
+    color: $white;
+    background-color: $bg-dark;
+  }
 }
 
 .filters {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  // gap: 10px;
+  margin-top: 30px;
+}
 
+.flag,
+.darkFlag {
+  position: fixed;
+  top: 110px;
+  left: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid $black-light;
+  cursor: pointer;
+  z-index: 10;
+  background: url("../../assets/images/filter.png") no-repeat center;
+  padding: 0;
+  &::before {
+    transition: left 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+  &::before {
+    content: "Filters";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    width: 80px;
+    height: 40px;
+    transform: translateY(-50%);
+    padding: 6px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $white;
+    background-color: $bg-dark;
+    z-index: -1;
+    border-radius: 6px;
+  }
+  &:hover {
+    &::before {
+      left: calc(100% + 10px);
+      opacity: 1;
+    }
+  }
+}
+
+.darkFlag {
+  border: 1px solid $white;
+  background: url("../../assets/images/filter-dark.png") no-repeat center;
+  &::before {
+    border: 1px solid $white;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .content, .darkContent {
+    width: 40%;
+
+  }
+}
+
+@media (max-width: 767.98px) {
+  .content, .darkContent {
+    width: 60%;
+
+  }
 }

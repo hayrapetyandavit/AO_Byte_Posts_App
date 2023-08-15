@@ -16,6 +16,7 @@ import classes from "./style.module.scss";
 interface IProps {
   title: string;
   value: string[];
+  onClick: () => void;
 }
 
 const Select: FC<IProps> = (props) => {
@@ -26,7 +27,7 @@ const Select: FC<IProps> = (props) => {
 
   const dispatch = useDispatch();
 
-  const handleMonthChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(e.target.value);
     
     switch (e.target.name) {
@@ -63,7 +64,8 @@ const Select: FC<IProps> = (props) => {
                 name={title}
                 value={item}
                 checked={selectedValue === item}
-                onChange={handleMonthChange}
+                onChange={handleChange}
+                // onClick={() => props.onClick()}
                 className={theme === "dark" ? classes.darkMode : undefined}
               />
               <span>{item}</span>

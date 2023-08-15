@@ -2,7 +2,7 @@
 
 .list {
   position: relative;
-  width: 240px;
+  width: 80%;
   text-transform: capitalize;
   cursor: pointer;
 
@@ -10,15 +10,15 @@
     position: absolute;
     left: -9999px;
   }
-
   input[type="radio"] + span {
     width: 100%;
     color: $black-light;
-    padding: 5px 20px;
+    padding: 4px 20px;
     display: block;
     text-align: center;
     box-sizing: border-box;
     background: rgba(225, 226, 226, 0.2);
+    min-height: 40px;
     cursor: pointer;
   }
 
@@ -86,15 +86,16 @@
 }
 
 .content {
-  position: absolute;
-  top: 0;
-  padding-top: 40px;
+  // position: absolute;
+  position: relative;
+  top: -35px;
+  padding-top: 35px;
   box-sizing: border-box;
   width: 100%;
   overflow: hidden;
   max-height: 0;
-  transition: all 250ms ease;
-
+  transition: all 1000ms ease;
+  
   label:nth-last-of-type(1) span {
     border-radius: 0 0 4px 4px;
   }

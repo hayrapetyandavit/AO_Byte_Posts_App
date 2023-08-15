@@ -1,6 +1,5 @@
 .content {
   display: flex;
-  align-items: center;
   gap: 8px;
   margin: 12px 0;
   input {
@@ -25,7 +24,11 @@
 
 @media (max-width: 767.98px) {
   .content {
+    width: 60%;
     flex-direction: column;
+    input {
+      width: 100%;
+    }
   }
   .btnGroup {
     width: 100%;

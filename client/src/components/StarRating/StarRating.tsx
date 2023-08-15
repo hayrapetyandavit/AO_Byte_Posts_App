@@ -5,6 +5,7 @@ import {
   fetchAddRateToComment,
   fetchAllComments,
 } from "../../redux/actions/commentsActions";
+import { notify } from "../../utils/notifyMessage";
 
 import classes from "./style.module.scss";
 
@@ -26,7 +27,12 @@ const StarRating: FC<IProps> = (props) => {
   }, [currentRate]);
 
   const handleClick = async (index: number) => {
+    if (!localStorage.getItem("userId")) {
+      return notify("Please log in for add rating!");
+    }
+
     setRating(index);
+
     await dispatch(fetchAddRateToComment({ rate: index, commentId }));
     await dispatch(fetchAllComments());
   };

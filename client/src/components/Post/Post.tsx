@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { genId } from "../../utils/genId";
@@ -18,6 +19,7 @@ import AddComment from "../AddComment/AddComment";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 
 import classes from "./style.module.scss";
+import { notify } from "../../utils/notifyMessage";
 
 interface IProps {
   handleCommentsSort?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -41,6 +43,7 @@ const Post: FC<IProps> = (props) => {
   const [updateCdomments, setUpdateCdomments] = useState(commentsByPost);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const skeletonTimer = setTimeout(() => {
@@ -63,6 +66,9 @@ const Post: FC<IProps> = (props) => {
   const handleCommentsSort = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.id) {
       const id = e.currentTarget.id;
+      if (!commentsByPost[id]) {
+        return notify("This post haven't any comments");
+      }
       const sortedArray = commentsByPost[id].slice().sort((a, b) => {
         return sortType ? a.rate - b.rate : b.rate - a.rate;
       });
@@ -121,10 +127,19 @@ const Post: FC<IProps> = (props) => {
       <p className={classes.text}>{data.content}</p>
       <div className={classes.comments}>
         <div className={classes.btnGroup}>
-          <AddComment
-            postId={data.id}
-            handleCommentsSort={handleCommentsSort}
-          />
+          {localStorage.getItem("userId") ? (
+            <AddComment
+              postId={data.id}
+              handleCommentsSort={handleCommentsSort}
+            />
+          ) : (
+            <p
+              className={classes.commentMessage}
+              onClick={() => navigate("/login")}
+            >
+              You can add comment after log in!
+            </p>
+          )}
         </div>
         <span
           className={classes.rate}

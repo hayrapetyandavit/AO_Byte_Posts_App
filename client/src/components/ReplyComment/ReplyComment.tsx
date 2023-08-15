@@ -17,6 +17,10 @@ const ReplyComment: FC<IProps> = (props) => {
     setReply((prevState) => !prevState);
   };
 
+  if (!localStorage.getItem("userId")) {
+    return <p></p>;
+  }
+
   return (
     <div>
       <span className={classes.replyLink} onClick={handleReplyClick}>
