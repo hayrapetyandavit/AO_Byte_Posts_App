@@ -1,0 +1,39 @@
+@import "../../style/variables";
+
+.editContent {
+  position: relative;
+  width: fit-content;
+  width: 100%;
+  min-height: 0px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  padding: 4px 12px;
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid $grey-light;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 150px;
+  max-height: 400px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  resize: vertical;
+  overflow: auto;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.btnGroup {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  button {
+    // height: 12px;
+    padding: 0.2em 1.8em;
+  }
+}

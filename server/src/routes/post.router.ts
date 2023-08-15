@@ -4,6 +4,7 @@ import { verifyToken } from "../middlewares/verifyToken";
 import refreshToken from "../middlewares/refreshToken";
 
 import {
+  updatePost,
   createPost,
   deletePost,
   getPostsAuthors,
@@ -22,6 +23,7 @@ export default (app: Application) => {
 
   app.get("/posts", getPostsWithPagination);
   app.get("/posts/:userId", verifyToken, refreshToken, getPostsByUserId);
+  app.put("/posts/:id", verifyToken, refreshToken, updatePost);
   app.get("/authors", getPostsAuthors);
   app.post("/posts", verifyToken, refreshToken, createPost);
   app.delete("/posts/:id", verifyToken, refreshToken, deletePost);

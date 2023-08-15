@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Tektur:wght@500&display=swap");
 @import "../../style/variables";
 
-.posts {
+.post {
   position: relative;
   width: fit-content;
   min-height: 0px;
@@ -12,6 +12,9 @@
   margin: 20px 0;
   padding: 20px;
   border: 1px solid $grey-light;
+  button {
+    margin-left: 4px;
+  }
 }
 
 .title {
@@ -38,7 +41,6 @@ hr {
   padding: 1px 6px 3px;
   margin: 12px 0 4px;
   background-color: $bg-skeleton-item;
-  margin-right: 4px;
   span {
     margin-left: 4px;
   }

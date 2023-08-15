@@ -90,7 +90,6 @@ const AddPost: FC = () => {
         </label>
       </div>
       <div className={classes.selectGroup}>
-        {/* <Select title="Categories" value={["programming", "spave", "space"]} /> */}
         <select
           name="category"
           autoComplete="off"

@@ -6,6 +6,7 @@ import {
   fetchPostsAuthors,
   fetchCreatePost,
   fetchDeletePost,
+  fetchUpdatePost,
   updateCurrentPage,
 } from "../actions/postsActions";
 
@@ -91,6 +92,12 @@ const postsSlice = createSlice({
       .addCase(fetchCreatePost.pending, () => {})
       .addCase(fetchCreatePost.fulfilled, () => {})
       .addCase(fetchCreatePost.rejected, (state, action) => {
+        state.error = action.error.message || "An error occurred.";
+      })
+
+      .addCase(fetchUpdatePost.pending, () => {})
+      .addCase(fetchUpdatePost.fulfilled, () => {})
+      .addCase(fetchUpdatePost.rejected, (state, action) => {
         state.error = action.error.message || "An error occurred.";
       })
 

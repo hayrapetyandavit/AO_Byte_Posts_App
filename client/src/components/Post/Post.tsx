@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { genId } from "../../utils/genId";
 import { PostType } from "../../types/postType";
 import { StateType } from "../../types/stateType";
+import { notify } from "../../utils/notifyMessage";
 import {
   fetchDeletePost,
   fetchPostsWithPagination,
@@ -14,12 +15,12 @@ import { generateRateColor } from "../../utils/generateRateColor";
 
 import Button from "../Button/Button";
 import Comment from "../Comment/Comment";
+import EditPost from "../EditPost/EditPost";
 import Skeleton from "../Skeleton/Skeleton";
 import AddComment from "../AddComment/AddComment";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 
 import classes from "./style.module.scss";
-import { notify } from "../../utils/notifyMessage";
 
 interface IProps {
   handleCommentsSort?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -40,6 +41,7 @@ const Post: FC<IProps> = (props) => {
   );
 
   const [sortType, setSortType] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [updateCdomments, setUpdateCdomments] = useState(commentsByPost);
 
   const dispatch = useDispatch();
@@ -96,8 +98,12 @@ const Post: FC<IProps> = (props) => {
     return <Skeleton />;
   }
 
+  if (editMode) {
+    return <EditPost post={data} setEditMode={setEditMode}/>;
+  }
+
   return (
-    <div className={classes.posts} key={genId()}>
+    <div className={classes.post} key={genId()}>
       <div className={classes.deletePost}>
         <span className={classes.authorName} style={authorNameStyle}>
           {data.author} (author)
@@ -120,6 +126,11 @@ const Post: FC<IProps> = (props) => {
                   | Element
                   | DocumentFragment
               )}
+            <Button
+              value="&#9998;"
+              onClick={() => setEditMode(true)}
+              title="Edit post"
+            />
           </>
         ) : null}
       </div>

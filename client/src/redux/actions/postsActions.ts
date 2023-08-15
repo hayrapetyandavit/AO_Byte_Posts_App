@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  updatePostService,
   createPostService,
   deletePostService,
   getPostsAuthorsService,
@@ -13,6 +14,7 @@ export const POSTS_WITH_PAGINATION_REQUEST = "POSTS_WITH_PAGINATION_REQUEST";
 export const UPDATE_CURRENT_PAGE = "UPDATE_CURRENT_PAGE";
 export const FETCH_AUTHORS = "FETCH_AUTHORS";
 export const CREATE_POST = "CREATE_POST";
+export const UPDATE_POST = "UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
 
 export const fetchPostsWithPagination = createAsyncThunk(
@@ -75,6 +77,23 @@ export const fetchCreatePost = createAsyncThunk(
     dispatch({ type: CREATE_POST });
 
     const response = await createPostService(data);
+    return response;
+  }
+);
+
+export const fetchUpdatePost = createAsyncThunk(
+  "posts/fetchUpdatePost",
+  async (
+    data: { content: string; userId: string; id: string },
+    { dispatch }
+  ) => {
+    dispatch({ type: UPDATE_POST });
+
+    const response = await updatePostService(
+      data.content,
+      data.userId,
+      data.id
+    );
     return response;
   }
 );

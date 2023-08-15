@@ -139,6 +139,25 @@ export const createPost = async (req: Request, res: Response) => {
   }
 };
 
+export const updatePost = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const { userId, content } = req.body;
+
+    const post = await PostModel.findById(id);
+    const user = await UserModel.findById(userId);
+
+    if (user && post) {
+      await PostModel.updateOne({ _id: id }, { content: content });
+      res.status(201).send({ message: "Post updated successfully" });
+    } else {
+      res.status(403).send({ message: "Permission denied" });
+    }
+  } catch (error) {
+    res.status(500).send({ message: "Failed to update post" });
+  }
+};
+
 export const deletePost = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
@@ -151,7 +170,7 @@ export const deletePost = async (req: Request, res: Response) => {
       await PostModel.deleteOne({ _id: id });
       res.status(201).send({ message: "Post deleted successfully" });
     } else {
-      res.status(201).send({ message: "Permission denied" });
+      res.status(403).send({ message: "Permission denied" });
     }
   } catch (error) {
     res.status(500).send({ message: "Failed to delete post" });

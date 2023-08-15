@@ -101,6 +101,26 @@ export const createPostService = async (data: Omit<PostType, "id">) => {
   return response.json();
 };
 
+export const updatePostService = async (
+  content: string,
+  userId: string,
+  id: string
+) => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}posts/${id}`, {
+    method: "PUT",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId, content }),
+  });
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
+  return response.json();
+};
+
 export const deletePostService = async (userId: string, id: string) => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}posts/${id}`, {
     method: "DELETE",

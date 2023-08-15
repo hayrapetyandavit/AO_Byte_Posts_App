@@ -95,7 +95,9 @@ export default function Home() {
         nextLabel={"Next"}
         totalPages={totalPages}
       />
-      <AddPost />
+      <div className={classes.addPost}>
+        <AddPost />
+      </div>
     </div>
   );
 }
