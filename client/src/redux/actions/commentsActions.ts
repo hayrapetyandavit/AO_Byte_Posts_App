@@ -18,7 +18,7 @@ type UpdatedDataType = {
 };
 
 export const fetchAllComments = createAsyncThunk(
-  "allComments/fetchAll",
+  "comments/fetchAllComments",
   async (_, { dispatch }) => {
     dispatch({ type: All_COMMENTS_REQUEST });
 
@@ -27,10 +27,8 @@ export const fetchAllComments = createAsyncThunk(
   }
 );
 
-
-//Now this logic do not used
 export const updateCommentsByPost = createAsyncThunk(
-  "commentsByPost/updateAll",
+  "comments/updateCommentsByPost",
   async (data: UpdatedDataType, { dispatch }) => {
     dispatch({ type: UPDATE_COMMENTS_BY_POST });
     return data;
@@ -38,7 +36,7 @@ export const updateCommentsByPost = createAsyncThunk(
 );
 
 export const updateCommentsByParent = createAsyncThunk(
-  "commentsByParent/updateAll",
+  "comments/updateCommentsByParent",
   async (data: UpdatedDataType, { dispatch }) => {
     dispatch({ type: UPDATE_COMMENTS_BY_PARENT });
     return data;
@@ -46,7 +44,7 @@ export const updateCommentsByParent = createAsyncThunk(
 );
 
 export const fetchCreateComment = createAsyncThunk(
-  "posts/fetchCreateComment",
+  "comments/fetchCreateComment",
   async (data: Omit<CommentType, "id" | "rate" | "parentId">, { dispatch }) => {
     dispatch({ type: CREATE_COMMENT });
 
@@ -56,7 +54,7 @@ export const fetchCreateComment = createAsyncThunk(
 );
 
 export const fetchAddRateToComment = createAsyncThunk(
-  "posts/fetchAddRateToComment",
+  "comments/fetchAddRateToComment",
   async (data: { rate: number; commentId: string }, { dispatch }) => {
     dispatch({ type: ADD_RATE_TO_COMMENT });
 

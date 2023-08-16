@@ -34,12 +34,6 @@
   align-items: center;
   gap: 16px;
   cursor: pointer;
-  .userIcon {
-    transition: all 0.3s ease-out;
-    &:hover {
-      transform: scale(1.1);
-    }
-  }
   .userLog {
     color: $black-light;
   }

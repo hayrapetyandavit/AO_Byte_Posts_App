@@ -2,8 +2,6 @@ import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import Avatar from "react-avatar";
-
 import { StateType } from "../../types/stateType";
 import { logoutUser } from "../../services/authService";
 import { setTheme } from "../../redux/actions/themeAction";
@@ -27,9 +25,11 @@ const Header: FC = () => {
   }, []);
 
   const isLogout = () => {
-    logoutUser();
-    localStorage.removeItem("user");
-    localStorage.removeItem("userId");
+    if (user) {
+      logoutUser();
+      localStorage.removeItem("user");
+      localStorage.removeItem("userId");
+    }
 
     navigate("/login");
   };
@@ -38,10 +38,6 @@ const Header: FC = () => {
     const payloadTheme = theme === "dark" ? "light" : "dark";
 
     dispatch(setTheme(payloadTheme));
-  };
-
-  const handleAvatarClick = () => {
-    navigate("/home");
   };
 
   const userLogStyle = theme === "dark" ? { color: "#fff" } : undefined;
@@ -59,19 +55,6 @@ const Header: FC = () => {
         </div>
         <div className={classes.userSide}>
           <ThemeSwitch onClick={handleSwitchClick} />
-          <div className={classes.userIcon}>
-            {user && (
-              <Avatar
-                name={user}
-                size="34"
-                textSizeRatio={1.75}
-                round="20px"
-                title={user}
-                color="#7f265bd2"
-                onClick={handleAvatarClick}
-              />
-            )}
-          </div>
           <h2
             className={classes.userLog}
             title={user ? "Log Out" : "Log In"}

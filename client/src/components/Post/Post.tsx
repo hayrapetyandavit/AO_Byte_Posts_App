@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { genId } from "../../utils/genId";
@@ -30,9 +30,6 @@ interface IProps {
 const Post: FC<IProps> = (props) => {
   const { data } = props;
 
-  const [showSkeleton, setShowSkeleton] = useState(true);
-  const [isShowModal, setShowModal] = useState(false);
-
   const { loading } = useSelector((state: StateType) => state.posts);
   const theme = useSelector((state: StateType) => state.theme.theme);
 
@@ -42,10 +39,12 @@ const Post: FC<IProps> = (props) => {
 
   const [sortType, setSortType] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [isShowModal, setShowModal] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(true);
   const [updateCdomments, setUpdateCdomments] = useState(commentsByPost);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const skeletonTimer = setTimeout(() => {
@@ -99,7 +98,7 @@ const Post: FC<IProps> = (props) => {
   }
 
   if (editMode) {
-    return <EditPost post={data} setEditMode={setEditMode}/>;
+    return <EditPost post={data} setEditMode={setEditMode} />;
   }
 
   return (
@@ -123,8 +122,8 @@ const Post: FC<IProps> = (props) => {
                   onCancel={onCancel}
                 />,
                 document.getElementById("modal-root") as
-                  | Element
-                  | DocumentFragment
+                | Element
+                | DocumentFragment
               )}
             <Button
               value="&#9998;"
@@ -144,12 +143,11 @@ const Post: FC<IProps> = (props) => {
               handleCommentsSort={handleCommentsSort}
             />
           ) : (
-            <p
-              className={classes.commentMessage}
-              onClick={() => navigate("/login")}
-            >
-              You can add comment after log in!
-            </p>
+            // <p
+            //   className={classes.commentMessage}
+            // >
+            <Link to="/login">You can add comment after log in!</Link>
+            // </p>
           )}
         </div>
         <span

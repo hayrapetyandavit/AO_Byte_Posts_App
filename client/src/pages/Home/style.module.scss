@@ -11,6 +11,10 @@
   padding: 0 40px;
   margin: 120px 0 40px;
   overflow: auto;
+  a {
+    color: $purple;
+    text-decoration: none;
+  }
 }
 
 .addPost {

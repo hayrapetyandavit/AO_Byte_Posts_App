@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { genId } from "../../utils/genId";
@@ -18,8 +18,9 @@ import Paginate from "../../components/Paginate/Paginate";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 import classes from "./style.module.scss";
+import { Link } from "react-router-dom";
 
-export default function Home() {
+const Home: FC = () => {
   const { loading, postsByUserId, currentPage, totalPages, error } =
     useSelector((state: StateType) => state.posts);
   const { allComments, commentsByPost, commentsByParent } = useSelector(
@@ -87,6 +88,7 @@ export default function Home() {
 
   return (
     <div className={classes.content}>
+      <Link to="/">&#10554; go back to all posts</Link>
       {postsByUserId.map((post: PostType) => (
         <Post {...containerProps} data={post} key={genId()} />
       ))}
@@ -100,4 +102,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default Home;

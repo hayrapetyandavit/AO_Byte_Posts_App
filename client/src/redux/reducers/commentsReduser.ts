@@ -26,7 +26,7 @@ const initialState: IState = {
 };
 
 const commentsSlice = createSlice({
-  name: "allComments",
+  name: "comments",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

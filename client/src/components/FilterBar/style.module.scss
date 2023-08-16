@@ -17,8 +17,8 @@
     position: absolute;
     top: 4%;
     left: 96%;
-    width: 34px;
-    height: 34px;
+    width: 45px;
+    height: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,7 +30,7 @@
     cursor: pointer;
   }
   .closeIcon:hover {
-    transform: scale(1.1);
+    transform: matrix(0, 1, 1, 0, 0, 0);
   }
 }
 
@@ -40,6 +40,7 @@
   .closeIcon {
     color: $white;
     background-color: $bg-dark;
+    box-shadow: 0 0 14px -0 $purple;
   }
 }
 
@@ -51,9 +52,11 @@
 }
 
 .flag,
-.darkFlag {
+.darkFlag,
+.avatar,
+.darkAvatar {
   position: fixed;
-  top: 110px;
+  top: 170px;
   left: 12px;
   width: 40px;
   height: 40px;
@@ -93,6 +96,21 @@
   }
 }
 
+.avatar,
+.darkAvatar {
+  top: 110px;
+  font-size: 14px;
+  font-weight: 600;
+  color: $black-light;
+  border-radius: 100%;
+  background: none;
+  &::before {
+    content: attr(data-content);
+    min-width: 80px;
+    width: fit-content;
+  }
+}
+
 .darkFlag {
   border: 1px solid $white;
   background: url("../../assets/images/filter-dark.png") no-repeat center;
@@ -100,17 +118,23 @@
     border: 1px solid $white;
   }
 }
+.darkAvatar {
+  border: 1px solid $white;
+  &::before {
+    border: 1px solid $white;
+  }
+}
 
 @media (max-width: 991.98px) {
-  .content, .darkContent {
+  .content,
+  .darkContent {
     width: 40%;
-
   }
 }
 
 @media (max-width: 767.98px) {
-  .content, .darkContent {
+  .content,
+  .darkContent {
     width: 60%;
-
   }
 }

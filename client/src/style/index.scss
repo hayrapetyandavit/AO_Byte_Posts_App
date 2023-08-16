@@ -63,6 +63,13 @@ body {
   textarea {
     color: $white;
   }
+  a {
+    color: $white;
+    opacity: 0.3;
+    &:hover {
+      opacity: 1;
+    }
+  }
   input:focus ~ label,
   input:valid ~ label {
     color: $white;

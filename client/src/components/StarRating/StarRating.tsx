@@ -1,6 +1,11 @@
 import React, { FC, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+import {
+  fetchPostsByUserId,
+  fetchPostsWithPagination,
+} from "../../redux/actions/postsActions";
 import {
   fetchAddRateToComment,
   fetchAllComments,
@@ -21,6 +26,7 @@ const StarRating: FC<IProps> = (props) => {
   const [rating, setRating] = useState(currentRate);
 
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     setRating(currentRate);
@@ -33,8 +39,16 @@ const StarRating: FC<IProps> = (props) => {
 
     setRating(index);
 
+    const path = location.pathname;
+
     await dispatch(fetchAddRateToComment({ rate: index, commentId }));
     await dispatch(fetchAllComments());
+
+    if (path === "/home") {
+      await dispatch(fetchPostsByUserId(localStorage.getItem("userId") || ""));
+    } else {
+      await dispatch(fetchPostsWithPagination());
+    }
   };
 
   const handleMouseEnter = (index: number) => {
