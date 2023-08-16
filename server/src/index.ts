@@ -1,13 +1,13 @@
-import dotenv from "dotenv";
 import express, { Application } from "express";
-import mongoose from "mongoose";
 import cors from "cors";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 
-import postRouter from "./routes/post.router";
-import commentRouter from "./routes/comment.router";
-import authRouter from "./routes/auth.router";
 import dbConfig from "./config/db.config";
+import postRouter from "./routes/post.router";
+import authRouter from "./routes/auth.router";
+import commentRouter from "./routes/comment.router";
 
 const corsOptions = {
   origin: `http://localhost:3000`,

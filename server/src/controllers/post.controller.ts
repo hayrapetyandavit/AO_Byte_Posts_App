@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 
-import { postModelDTO } from "../utils/mongoModelDTO";
-
 import PostModel from "../models/post.model";
 import UserModel from "../models/user.model";
+import { postModelDTO } from "../utils/mongoModelDTO";
 
 enum SortByOptions {
   PostRate = "post rate",

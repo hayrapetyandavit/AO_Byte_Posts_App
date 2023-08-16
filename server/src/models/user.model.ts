@@ -6,7 +6,6 @@ export interface IUserModel {
   email: string;
   password: string;
   isVerify: boolean;
-  // verifyToken: string;
   createdAt: Date;
 }
 [];
@@ -17,7 +16,6 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true },
     password: { type: String, required: true },
     isVerify: { type: Boolean, required: true },
-    // verifyToken: { type: String, required: true },
   },
   {
     timestamps: true,

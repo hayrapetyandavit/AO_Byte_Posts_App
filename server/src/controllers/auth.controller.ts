@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
 import { mailer } from "../utils/mailer";
-
-import authConfig from "../config/auth.config";
-
 import UserModel from "../models/user.model";
+import authConfig from "../config/auth.config";
 
 export const register = async (req: Request, res: Response) => {
   try {
