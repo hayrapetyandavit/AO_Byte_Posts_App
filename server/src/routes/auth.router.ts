@@ -1,15 +1,15 @@
 import { Application } from "express";
 
-import {refreshToken} from "../middlewares/refreshToken";
+import { refreshToken } from "../middlewares/refreshToken";
 import { verifyToken } from "../middlewares/verifyToken";
 import {
-  register,
-  login,
-  logout,
-  forgotPassword,
-  resetPassword,
-  verifyLogin,
-  isAuth,
+  registerController,
+  loginController,
+  logoutController,
+  forgotPasswordController,
+  resetPasswordController,
+  verifyLoginController,
+  isAuthController,
 } from "../controllers/auth.controller";
 import { emailValidation, passwordValidation } from "../utils/validations";
 
@@ -24,12 +24,20 @@ export default (app: Application) => {
   app.post(
     "/reset-password/:token",
     [emailValidation, passwordValidation],
-    resetPassword
+    resetPasswordController
   );
-  app.post("/logout", verifyToken, refreshToken, logout);
-  app.get("/check-session", verifyToken, refreshToken, isAuth);
-  app.post("/forgot-password", [emailValidation], forgotPassword);
-  app.post("/login", [emailValidation, passwordValidation], login);
-  app.post("/register", [emailValidation, passwordValidation], register);
-  app.post("/login/:token", [emailValidation, passwordValidation], verifyLogin);
+  app.post("/logout", verifyToken, refreshToken, logoutController);
+  app.get("/check-session", verifyToken, refreshToken, isAuthController);
+  app.post("/forgot-password", [emailValidation], forgotPasswordController);
+  app.post("/login", [emailValidation, passwordValidation], loginController);
+  app.post(
+    "/register",
+    [emailValidation, passwordValidation],
+    registerController
+  );
+  app.post(
+    "/login/:token",
+    [emailValidation, passwordValidation],
+    verifyLoginController
+  );
 };

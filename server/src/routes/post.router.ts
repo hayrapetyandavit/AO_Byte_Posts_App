@@ -4,12 +4,12 @@ import { verifyToken } from "../middlewares/verifyToken";
 import { refreshToken } from "../middlewares/refreshToken";
 
 import {
-  updatePost,
-  createPost,
-  deletePost,
-  getPostsAuthors,
-  getPostsByUserId,
-  getPostsWithPagination,
+  updatePostController,
+  createPostController,
+  deletePostController,
+  getPostsAuthorsController,
+  getPostsByUserIdController,
+  getPostsWithPaginationController,
 } from "../controllers/post.controller";
 
 export default (app: Application) => {
@@ -21,10 +21,10 @@ export default (app: Application) => {
     next();
   });
 
-  app.get("/authors", getPostsAuthors);
-  app.get("/posts", getPostsWithPagination);
-  app.post("/posts", verifyToken, refreshToken, createPost);
-  app.put("/posts/:id", verifyToken, refreshToken, updatePost);
-  app.delete("/posts/:id", verifyToken, refreshToken, deletePost);
-  app.get("/posts/:userId", verifyToken, refreshToken, getPostsByUserId);
+  app.get("/authors", getPostsAuthorsController);
+  app.get("/posts", getPostsWithPaginationController);
+  app.post("/posts", verifyToken, refreshToken, createPostController);
+  app.put("/posts/:id", verifyToken, refreshToken, updatePostController);
+  app.delete("/posts/:id", verifyToken, refreshToken, deletePostController);
+  app.get("/posts/:userId", verifyToken, refreshToken, getPostsByUserIdController);
 };

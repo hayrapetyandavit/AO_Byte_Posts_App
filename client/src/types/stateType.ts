@@ -13,6 +13,7 @@ export type StateType = {
     authors: string[];
     totalPages: number;
     currentPage: number;
+    message: string;
     error: string;
   };
 

@@ -17,6 +17,7 @@ interface IState {
   authors: string[];
   totalPages: number;
   currentPage: number;
+  message: string;
   error: string;
 }
 
@@ -29,6 +30,7 @@ const initialState: IState = {
   authors: [],
   totalPages: 0,
   currentPage: +pageFromStorage,
+  message: "",
   error: "",
 };
 
@@ -102,7 +104,9 @@ const postsSlice = createSlice({
       })
 
       .addCase(fetchDeletePost.pending, () => {})
-      .addCase(fetchDeletePost.fulfilled, () => {})
+      .addCase(fetchDeletePost.fulfilled, (state, action) => {
+        state.message = action.payload.message;
+      })
       .addCase(fetchDeletePost.rejected, (state, action) => {
         state.error = action.error.message || "An error occurred.";
       })

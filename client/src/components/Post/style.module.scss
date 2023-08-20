@@ -2,6 +2,7 @@
 
 .post {
   position: relative;
+  min-width: 30%;
   width: fit-content;
   min-height: 0px;
   display: flex;
@@ -49,6 +50,7 @@ hr {
   display: flex;
   align-items: center;
   gap: 4px;
+  margin-bottom: 12px;
   button {
     display: flex;
     align-items: center;
@@ -75,17 +77,22 @@ hr {
   }
 }
 
-.rate {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  margin-top: 180px;
-}
-
 .title {
   overflow: hidden;
   white-space: nowrap;
   animation: typing 3.5s steps(40, end), blink-caret 0.7s step-end infinite;
+}
+
+.spanGroup {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  gap: 8px;
+  text-transform: capitalize;
+  .edited {
+    color: $green;
+  }
 }
 
 @keyframes typing {

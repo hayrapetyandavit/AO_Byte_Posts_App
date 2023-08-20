@@ -3,6 +3,7 @@ type PostsDataType = {
   title: string;
   content: string;
   category: string;
+  edited: boolean;
   author: string;
   totalRate: number;
   userId: string;
@@ -14,6 +15,7 @@ export const postModelDTO = (data: PostsDataType) => {
     title: data.title,
     content: data.content,
     category: data.category,
+    edited: data.edited,
     author: data.author,
     totalRate: data.totalRate,
     userId: data.userId,

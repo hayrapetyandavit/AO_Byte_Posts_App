@@ -4,9 +4,9 @@ import { verifyToken } from "../middlewares/verifyToken";
 import { refreshToken } from "../middlewares/refreshToken";
 
 import {
-  getAllComments,
-  createComment,
-  addRateToComment,
+  getAllCommentsController,
+  createCommentController,
+  addRateToCommentController,
 } from "../controllers/comment.controller";
 
 export default (app: Application) => {
@@ -17,7 +17,7 @@ export default (app: Application) => {
     );
     next();
   });
-  app.get("/comments", getAllComments);
-  app.post("/comments", verifyToken, refreshToken, createComment);
-  app.put("/comments/:commentId", verifyToken, refreshToken, addRateToComment);
+  app.get("/comments", getAllCommentsController);
+  app.post("/comments", verifyToken, refreshToken, createCommentController);
+  app.put("/comments/:commentId", verifyToken, refreshToken, addRateToCommentController);
 };

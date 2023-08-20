@@ -29,8 +29,9 @@ interface IProps {
 
 const Post: FC<IProps> = (props) => {
   const { data } = props;
-
-  const { loading } = useSelector((state: StateType) => state.posts);
+  const { loading, message, error } = useSelector(
+    (state: StateType) => state.posts
+  );
   const theme = useSelector((state: StateType) => state.theme.theme);
 
   const { commentsByPost } = useSelector(
@@ -44,7 +45,6 @@ const Post: FC<IProps> = (props) => {
   const [updateCdomments, setUpdateCdomments] = useState(commentsByPost);
 
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
 
   useEffect(() => {
     const skeletonTimer = setTimeout(() => {
@@ -61,6 +61,12 @@ const Post: FC<IProps> = (props) => {
     };
 
     await dispatch(fetchDeletePost(data));
+    if (message) {
+      notify(message);
+    }
+    if (error) {
+      notify(error);
+    }
     await dispatch(fetchPostsWithPagination());
   };
 
@@ -122,8 +128,8 @@ const Post: FC<IProps> = (props) => {
                   onCancel={onCancel}
                 />,
                 document.getElementById("modal-root") as
-                | Element
-                | DocumentFragment
+                  | Element
+                  | DocumentFragment
               )}
             <Button
               value="&#9998;"
@@ -133,7 +139,11 @@ const Post: FC<IProps> = (props) => {
           </>
         ) : null}
       </div>
-      <h2 className={classes.title}>{data.title}</h2>
+      <h2 className={classes.title} title={data.title}>
+        {data.title!.length > 25
+          ? data.title?.slice(0, 20) + "..."
+          : data.title}
+      </h2>
       <p className={classes.text}>{data.content}</p>
       <div className={classes.comments}>
         <div className={classes.btnGroup}>
@@ -143,21 +153,20 @@ const Post: FC<IProps> = (props) => {
               handleCommentsSort={handleCommentsSort}
             />
           ) : (
-            // <p
-            //   className={classes.commentMessage}
-            // >
             <Link to="/login">You can add comment after log in!</Link>
-            // </p>
           )}
         </div>
-        <span
-          className={classes.rate}
-          style={{
-            color: generateRateColor(data.totalRate!),
-          }}
-        >
-          {data.totalRate ? data.totalRate : "No rating ..."}
-        </span>
+        <div className={classes.spanGroup}>
+          {data.edited && <span className={classes.edited}>edited &#10003;</span>}
+          <span
+            className={classes.rate}
+            style={{
+              color: generateRateColor(data.totalRate!),
+            }}
+          >
+            {data.totalRate ? data.totalRate : "No rating ..."}
+          </span>
+        </div>
         <Comment id={data.id} userId={data.userId} comments={updateCdomments} />
       </div>
     </div>

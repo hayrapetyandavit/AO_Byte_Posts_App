@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { genId } from "../../utils/genId";
@@ -18,11 +19,11 @@ import Paginate from "../../components/Paginate/Paginate";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 import classes from "./style.module.scss";
-import { Link } from "react-router-dom";
 
 const Home: FC = () => {
-  const { loading, postsByUserId, currentPage, totalPages, error } =
-    useSelector((state: StateType) => state.posts);
+  const { postsByUserId, currentPage, totalPages, error } = useSelector(
+    (state: StateType) => state.posts
+  );
   const { allComments, commentsByPost, commentsByParent } = useSelector(
     (state: StateType) => state.allComments
   );
@@ -77,10 +78,6 @@ const Home: FC = () => {
     commentsByPost,
     commentsByParent,
   };
-
-  if (!loading && postsByUserId.length === 0) {
-    return <h1>There are no any posts</h1>;
-  }
 
   if (error) {
     return <ErrorMessage message={error} />;
