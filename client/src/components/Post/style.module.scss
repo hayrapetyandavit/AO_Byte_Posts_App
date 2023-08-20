@@ -68,7 +68,6 @@ hr {
 
 .deletePost {
   position: absolute;
-  top: 14px;
   right: 8px;
   button {
     width: 30px;
@@ -121,5 +120,20 @@ hr {
   }
   .posts {
     width: 100%;
+  }
+}
+
+@media (max-width: 550.98px) {
+  .post {
+    border: none;
+  }
+  .deletePost {
+    bottom: 130px;
+    right: 20px;
+    button {
+      width: 30px;
+      height: 100%;
+      padding: 2px 0 0 0;
+    }
   }
 }

@@ -132,9 +132,26 @@
   }
 }
 
-@media (max-width: 767.98px) {
-  .content,
-  .darkContent {
-    width: 60%;
+@media (max-width: 550.98px) {
+  .flag,
+  .darkFlag,
+  .avatar,
+  .darkAvatar {
+    top: 100px;
+    left: 452px;
+    background-color: $white;
+    &::before {
+      top: -1000%;
+    }
+  }
+
+  .avatar,
+  .darkAvatar {
+    top: 100px;
+    left: 402px;
+  }
+  .darkFlag,
+  .darkAvatar {
+    background-color: $bg-dark;
   }
 }

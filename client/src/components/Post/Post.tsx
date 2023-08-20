@@ -128,8 +128,8 @@ const Post: FC<IProps> = (props) => {
                   onCancel={onCancel}
                 />,
                 document.getElementById("modal-root") as
-                  | Element
-                  | DocumentFragment
+                | Element
+                | DocumentFragment
               )}
             <Button
               value="&#9998;"

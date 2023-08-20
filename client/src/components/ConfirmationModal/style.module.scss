@@ -10,6 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 20;
 }
 
 .modal {
@@ -67,4 +68,22 @@
   color: $white;
   background-color: $bg-dark;
   box-shadow: 5px 6px 25px -2px $purple-shadow;
+}
+
+@media (max-width: 767.98px) {
+  .modal {
+    width: 700px;
+  }
+}
+
+@media (max-width: 550.98px) {
+  .modal {
+    width: 330px;
+  }
+}
+
+@media (max-width: 370.98px) {
+  .modal {
+    width: 300px;
+  }
 }
