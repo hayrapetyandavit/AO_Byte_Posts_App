@@ -2,7 +2,7 @@
 
 .post {
   position: relative;
-  min-width: 30%;
+  min-width: 40%;
   width: fit-content;
   min-height: 0px;
   display: flex;
@@ -121,15 +121,25 @@ hr {
   .posts {
     width: 100%;
   }
+  .deletePost {
+    // bottom: 150px;
+    right: 20px;
+  }
 }
 
-@media (max-width: 550.98px) {
+@media (max-width: 767.98px) {
   .post {
     border: none;
   }
   .deletePost {
-    bottom: 130px;
-    right: 20px;
+    .authorName {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 550.98px) {
+  .deletePost {
     button {
       width: 30px;
       height: 100%;

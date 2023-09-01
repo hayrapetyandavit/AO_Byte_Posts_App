@@ -1,6 +1,5 @@
 import { Application } from "express";
 
-import { refreshToken } from "../middlewares/refreshToken";
 import { verifyToken } from "../middlewares/verifyToken";
 import {
   registerController,
@@ -26,8 +25,8 @@ export default (app: Application) => {
     [emailValidation, passwordValidation],
     resetPasswordController
   );
-  app.post("/logout", verifyToken, refreshToken, logoutController);
-  app.get("/check-session", verifyToken, refreshToken, isAuthController);
+  app.post("/logout", logoutController);
+  app.get("/check-session", verifyToken, isAuthController);
   app.post("/forgot-password", [emailValidation], forgotPasswordController);
   app.post("/login", [emailValidation, passwordValidation], loginController);
   app.post(

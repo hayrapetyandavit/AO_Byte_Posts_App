@@ -1,13 +1,16 @@
 import React, { FC, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import classes from "./style.module.scss";
-import { PostType } from "../../types/postType";
-import Button from "../Button/Button";
-import { useDispatch } from "react-redux";
 import {
   fetchPostsByUserId,
   fetchUpdatePost,
 } from "../../redux/actions/postsActions";
+import { PostType } from "../../types/postType";
+import { StateType } from "../../types/stateType";
+
+import Button from "../Button/Button";
+
+import classes from "./style.module.scss";
 
 interface IProps {
   post: PostType;
@@ -19,6 +22,8 @@ const EditPost: FC<IProps> = (props) => {
 
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
+
+  const { userId } = useSelector((state: StateType) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -33,7 +38,7 @@ const EditPost: FC<IProps> = (props) => {
     const data = {
       title: postTitle,
       content: postContent,
-      userId: localStorage.getItem("userId") || "",
+      userId,
       id: e.currentTarget.id,
     };
 

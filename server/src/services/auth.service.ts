@@ -83,10 +83,6 @@ export const login = async (body: IReqBody) => {
   if (compare) {
     const expiresIn = isChecked ? "10d" : "15m";
 
-    // const expiresMaxAge = isChecked
-    //   ? authConfig.jwtRememberExpiration * 1000000
-    //   : authConfig.jwtExpiration * 1000;
-
     const accessToken = jwt.sign(
       {
         id: user.id,
@@ -98,11 +94,22 @@ export const login = async (body: IReqBody) => {
       }
     );
 
+    const refreshToken = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+      },
+      authConfig.REFRESH_JWT_SECRET,
+      {
+        expiresIn: "2h",
+      }
+    );
+
     return {
       id: user.id,
       name: user.name,
-      // expiresMaxAge,
       accessToken,
+      refreshToken,
     };
   } else {
     return {

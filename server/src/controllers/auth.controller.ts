@@ -8,6 +8,7 @@ import {
   isAuth,
   logout,
 } from "../services/auth.service";
+import authConfig from "../config/auth.config";
 
 export const registerController = async (req: Request, res: Response) => {
   try {
@@ -22,18 +23,13 @@ export const registerController = async (req: Request, res: Response) => {
 export const loginController = async (req: Request, res: Response) => {
   try {
     const result = await login(req.body);
-
-    // if (result.accessToken) {
-    //   res.cookie("access_token", result.accessToken, {
-    //     httpOnly: true,
-    //     maxAge: result.expiresMaxAge,
-    //     sameSite: "strict",
-    //   });
-    //   return res.status(200).send({
-    //     id: result.id,
-    //     name: result.name,
-    //   });
-    // }
+    if (result.refreshToken) {
+      res.cookie("refresh_token", result.refreshToken, {
+        httpOnly: true,
+        maxAge: authConfig.jwtRefreshExpiration * 1000,
+        sameSite: "strict",
+      });
+    }
     res.status(200).send(result);
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
@@ -43,17 +39,13 @@ export const loginController = async (req: Request, res: Response) => {
 export const verifyLoginController = async (req: Request, res: Response) => {
   try {
     const result = await verifyLogin(req.body, req.params.token);
-    if (result.accessToken) {
-      res.cookie("access_token", result.accessToken, {
-        httpOnly: true,
-        maxAge: result.expiresMaxAge,
-        sameSite: "strict",
-      });
-      return res.status(200).send({
-        id: result.id,
-        name: result.name,
-      });
-    }
+    // if (result.refreshToken) {
+    //   res.cookie("refresh_token", result.refreshToken, {
+    //     httpOnly: true,
+    //     maxAge: authConfig.jwtRefreshExpiration * 1000,
+    //     sameSite: "strict",
+    //   });
+    // }
     res.status(200).send(result);
   } catch (error: any) {}
 };

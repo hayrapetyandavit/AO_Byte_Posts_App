@@ -16,9 +16,9 @@ import { StateType } from "../../types/stateType";
 export const IS_AUTH_REQUEST = "IS_AUTH_REQUEST";
 export const LOGIN_USER_REQUEST = "LOGIN_USER_REQUEST";
 export const LOGOUT_USER_REQUEST = "LOGOUT_USER_REQUEST";
-export const RESET_PASSWORD_REQUEST = "LOGOUT_USER_REQUEST";
-export const FORGOT_PASSWORD_REQUEST = "LOGOUT_USER_REQUEST";
 export const REGISTER_USER_REQUEST = "REGISTER_USER_REQUEST";
+export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
+export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
 
 export const loginUserAction: any = createAsyncThunk(
   "auth/loginUserAction",
@@ -26,11 +26,6 @@ export const loginUserAction: any = createAsyncThunk(
     dispatch({ type: LOGIN_USER_REQUEST });
 
     const response = await loginUserService(data);
-    // if (response.id) {
-    //   localStorage.setItem("user", response.name);
-    //   localStorage.setItem("userId", response.id);
-    //   localStorage.setItem("accessToken", response.accessToken);
-    // }
 
     if (response.message) {
       notify(response.message);
@@ -92,9 +87,6 @@ export const isAuthAction: any = createAsyncThunk(
 
     const response = await isAuthService(auth.accessToken);
     if (!response.valid) {
-      // localStorage.removeItem("user");
-      // localStorage.removeItem("userId");
-
       window.location.reload();
     }
     return response;
@@ -108,11 +100,6 @@ export const logoutUserAction: any = createAsyncThunk(
     const { auth } = getState() as StateType;
 
     const response = await logoutUserService(auth.accessToken);
-
-    // if (response.code === 200) {
-    //   localStorage.removeItem("user");
-    //   localStorage.removeItem("userId");
-    // }
 
     return response;
   }

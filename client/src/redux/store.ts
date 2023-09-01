@@ -61,7 +61,6 @@ const store = configureStore({
 
 const persistor = persistStore(store);
 
-// Adjusted types for the persisted store
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 

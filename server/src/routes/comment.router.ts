@@ -1,7 +1,6 @@
 import { Application } from "express";
 
 import { verifyToken } from "../middlewares/verifyToken";
-import { refreshToken } from "../middlewares/refreshToken";
 
 import {
   getAllCommentsController,
@@ -18,6 +17,6 @@ export default (app: Application) => {
     next();
   });
   app.get("/comments", getAllCommentsController);
-  app.post("/comments", verifyToken, refreshToken, createCommentController);
-  app.put("/comments/:commentId", verifyToken, refreshToken, addRateToCommentController);
+  app.post("/comments", verifyToken, createCommentController);
+  app.put("/comments/:commentId", verifyToken, addRateToCommentController);
 };

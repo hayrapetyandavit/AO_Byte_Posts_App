@@ -1,7 +1,6 @@
 import { Application } from "express";
 
 import { verifyToken } from "../middlewares/verifyToken";
-import { refreshToken } from "../middlewares/refreshToken";
 
 import {
   updatePostController,
@@ -23,8 +22,8 @@ export default (app: Application) => {
 
   app.get("/authors", getPostsAuthorsController);
   app.get("/posts", getPostsWithPaginationController);
-  app.post("/posts", verifyToken, refreshToken, createPostController);
-  app.put("/posts/:id", verifyToken, refreshToken, updatePostController);
-  app.delete("/posts/:id", verifyToken, refreshToken, deletePostController);
-  app.get("/posts/:userId", verifyToken, refreshToken, getPostsByUserIdController);
+  app.post("/posts", verifyToken, createPostController);
+  app.put("/posts/:id", verifyToken, updatePostController);
+  app.delete("/posts/:id", verifyToken, deletePostController);
+  app.get("/posts/:userId", verifyToken, getPostsByUserIdController);
 };

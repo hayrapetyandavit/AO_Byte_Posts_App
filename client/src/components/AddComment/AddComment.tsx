@@ -1,10 +1,11 @@
 import React, { FC, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   fetchAllComments,
   fetchCreateComment,
 } from "../../redux/actions/commentsActions";
+import { StateType } from "../../types/stateType";
 import { notify } from "../../utils/notifyMessage";
 
 import Input from "../Input/Input";
@@ -22,6 +23,8 @@ const AddComment: FC<IProps> = (props) => {
   const { postId, parentId, handleCommentsSort } = props;
 
   const [content, setContent] = useState("");
+
+  const { user, userId } = useSelector((state: StateType) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -41,13 +44,11 @@ const AddComment: FC<IProps> = (props) => {
       return notify("input is required!");
     }
 
-    const userId = localStorage.getItem("userId") || "";
-
     const data: DataType = {
       content,
       postId,
       userId,
-      author: localStorage.getItem("user") || "",
+      author: user
     };
 
     if (props.parentId) {

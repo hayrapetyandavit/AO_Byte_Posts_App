@@ -9,29 +9,33 @@ export const verifyToken = async (
   next: NextFunction
 ) => {
   try {
-    const refreshToken = req.cookies.refresh_token;
     const authHeader = req.header("Authorization") || "";
     const accessToken = authHeader.split(" ")[1];
+    const refreshToken = req.cookies.refresh_token;
 
-    if (accessToken) {
-      const payload = jwt.verify(accessToken, authConfig.ACCESS_JWT_SECRET);
-      if (!payload) {
-        const refreshPayload = jwt.verify(
-          refreshToken,
-          authConfig.REFRESH_JWT_SECRET
-        );
-        if (!refreshPayload) {
-          return res.status(401).send({
-            message: "Unauthenticated",
-          });
+    jwt.verify(
+      accessToken,
+      authConfig.ACCESS_JWT_SECRET,
+      (accessTokenErr: any, decodedAccessToken: any) => {
+        if (accessTokenErr) {
+          jwt.verify(
+            refreshToken,
+            authConfig.REFRESH_JWT_SECRET,
+            (refreshTokenErr: any, decodedRefreshToken: any) => {
+              if (refreshTokenErr) {
+                console.log("Both tokens are invalid or expired.");
+                return res.status(401).send("Unauthenticated");
+              }
+              next();
+            }
+          );
+        } else {
+          next();
         }
-        return res.status(401).send({
-          message: "Unauthenticated",
-        });
       }
-      next();
-    }
+    );
   } catch (error) {
+    console.error(error);
     res.status(401).send("Please authenticate");
   }
 };

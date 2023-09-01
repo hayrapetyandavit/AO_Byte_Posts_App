@@ -107,7 +107,11 @@ const Post: FC<IProps> = (props) => {
   }
 
   return (
-    <div className={classes.post} key={genId()}>
+    <div
+      className={classes.post}
+      key={genId()}
+      title={`${data.author} (author)`}
+    >
       <div className={classes.deletePost}>
         <span className={classes.authorName} style={authorNameStyle}>
           {data.author} (author)
@@ -139,9 +143,7 @@ const Post: FC<IProps> = (props) => {
         ) : null}
       </div>
       <h2 className={classes.title} title={data.title}>
-        {data.title!.length > 25
-          ? data.title?.slice(0, 20) + "..."
-          : data.title}
+        {data.title!.length > 25 ? data.title?.slice(0, 1) + "..." : data.title}
       </h2>
       <p className={classes.text}>{data.content}</p>
       <div className={classes.comments}>
