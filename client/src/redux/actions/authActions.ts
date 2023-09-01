@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import {
@@ -20,7 +19,7 @@ export const REGISTER_USER_REQUEST = "REGISTER_USER_REQUEST";
 export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
 
-export const loginUserAction: any = createAsyncThunk(
+export const loginUserAction = createAsyncThunk(
   "auth/loginUserAction",
   async (data: AuthType, { dispatch }) => {
     dispatch({ type: LOGIN_USER_REQUEST });
@@ -35,7 +34,8 @@ export const loginUserAction: any = createAsyncThunk(
   }
 );
 
-export const registerUserAction: any = createAsyncThunk(
+
+export const registerUserAction = createAsyncThunk(
   "auth/registerUserAction",
   async (data: AuthType, { dispatch }) => {
     dispatch({ type: REGISTER_USER_REQUEST });
@@ -50,7 +50,7 @@ export const registerUserAction: any = createAsyncThunk(
   }
 );
 
-export const forgotPasswordAction: any = createAsyncThunk(
+export const forgotPasswordAction = createAsyncThunk(
   "auth/forgotPasswordAction",
   async (email: string, { dispatch }) => {
     dispatch({ type: REGISTER_USER_REQUEST });
@@ -64,7 +64,7 @@ export const forgotPasswordAction: any = createAsyncThunk(
   }
 );
 
-export const resetPasswordAction: any = createAsyncThunk(
+export const resetPasswordAction = createAsyncThunk(
   "auth/resetPasswordAction",
   async (data: AuthType, { dispatch }) => {
     dispatch({ type: RESET_PASSWORD_REQUEST });
@@ -79,7 +79,7 @@ export const resetPasswordAction: any = createAsyncThunk(
   }
 );
 
-export const isAuthAction: any = createAsyncThunk(
+export const isAuthAction = createAsyncThunk(
   "auth/isAuthAction",
   async (_, { dispatch, getState }) => {
     dispatch({ type: IS_AUTH_REQUEST });
@@ -93,7 +93,7 @@ export const isAuthAction: any = createAsyncThunk(
   }
 );
 
-export const logoutUserAction: any = createAsyncThunk(
+export const logoutUserAction = createAsyncThunk(
   "auth/logoutUserAction",
   async (_, { dispatch, getState }) => {
     dispatch({ type: LOGOUT_USER_REQUEST });

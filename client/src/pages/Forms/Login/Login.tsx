@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { StateType } from "../../../types/stateType";
+import { AppThunkDispatch } from "../../../redux/store";
 import { useInputChange } from "../../../hooks/useInputCHange";
 import { isValidateInput } from "../../../utils/isValidateInput";
 import { loginUserAction } from "../../../redux/actions/authActions";
@@ -15,7 +16,7 @@ const Login: FC = () => {
   const { message, error } = useSelector((state: StateType) => state.auth);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   const [fieldValidity, setFieldValidity] = useState({
     isEmailValid: true,

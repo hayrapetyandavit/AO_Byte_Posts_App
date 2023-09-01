@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { StateType } from "../../types/stateType";
+import { AppThunkDispatch } from "../../redux/store";
+import { categoriesMockData } from "../../constants/constants";
 import { fetchPostsAuthors } from "../../redux/actions/postsActions";
 
 import Select from "../Select/Select";
 
 import classes from "./style.module.scss";
-import { categoriesMockData } from "../../constants/constants";
 
 const FilterBar: FC = () => {
   const [isFiltersShow, setFiltersShow] = useState(false);
@@ -17,8 +18,8 @@ const FilterBar: FC = () => {
   const { authors } = useSelector((state: StateType) => state.posts);
   const { user } = useSelector((state: StateType) => state.auth);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   useEffect(() => {
     dispatch(fetchPostsAuthors());

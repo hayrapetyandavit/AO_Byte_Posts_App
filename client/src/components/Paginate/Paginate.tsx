@@ -2,6 +2,7 @@ import React, { FC } from "react";
 
 import { genId } from "../../utils/genId";
 import { StateType } from "../../types/stateType";
+import { AppThunkDispatch } from "../../redux/store";
 import { scrollToTop } from "../../utils/scrollToTop";
 import { updateCurrentPage } from "../../redux/actions/postsActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +22,7 @@ const Paginate: FC<IProps> = (props) => {
     (state: StateType) => state.posts
   );
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   const handlePageButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const id = e.currentTarget.id;

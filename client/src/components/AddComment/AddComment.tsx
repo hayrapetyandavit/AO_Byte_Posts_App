@@ -7,11 +7,13 @@ import {
 } from "../../redux/actions/commentsActions";
 import { StateType } from "../../types/stateType";
 import { notify } from "../../utils/notifyMessage";
+import { AppThunkDispatch } from "../../redux/store";
 
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 
 import classes from "./style.module.scss";
+
 
 interface IProps {
   postId: string;
@@ -26,7 +28,7 @@ const AddComment: FC<IProps> = (props) => {
 
   const { user, userId } = useSelector((state: StateType) => state.auth);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);

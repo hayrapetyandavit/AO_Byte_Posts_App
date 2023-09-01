@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { StateType } from "../../../types/stateType";
+import { AppThunkDispatch } from "../../../redux/store";
 import { useInputChange } from "../../../hooks/useInputCHange";
 import { isValidateInput } from "../../../utils/isValidateInput";
 import { registerUserAction } from "../../../redux/actions/authActions";
@@ -10,6 +11,7 @@ import { registerUserAction } from "../../../redux/actions/authActions";
 import View from "./View";
 
 import classes from "../style.module.scss";
+
 
 const Register: FC = () => {
   const { message, error } = useSelector((state: StateType) => state.auth);
@@ -22,7 +24,7 @@ const Register: FC = () => {
   });
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   const initialState = {
     name: "",

@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 
+import { AppThunkDispatch } from "../../../redux/store";
 import { useInputChange } from "../../../hooks/useInputCHange";
 import { isValidateInput } from "../../../utils/isValidateInput";
 import { forgotPasswordAction } from "../../../redux/actions/authActions";
@@ -9,13 +10,14 @@ import View from "./View";
 
 import classes from "../style.module.scss";
 
+
 const ForgotPassword: FC = () => {
 
   const [fieldValidity, setFieldValidity] = useState({
     isEmailValid: true,
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   const initialState = {
     email: "",

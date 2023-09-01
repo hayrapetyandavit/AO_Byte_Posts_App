@@ -7,6 +7,7 @@ import {
 } from "../../redux/actions/postsActions";
 import { StateType } from "../../types/stateType";
 import { notify } from "../../utils/notifyMessage";
+import { AppThunkDispatch } from "../../redux/store";
 import { scrollToTop } from "../../utils/scrollToTop";
 import { useInputChange } from "../../hooks/useInputCHange";
 import { categoriesMockData } from "../../constants/constants";
@@ -16,11 +17,12 @@ import Button from "../Button/Button";
 
 import classes from "./style.module.scss";
 
+
 const AddPost: FC = () => {
   const theme = useSelector((state: StateType) => state.theme.theme);
   const { user, userId } = useSelector((state: StateType) => state.auth);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   const initialState = {
     title: "",
@@ -47,7 +49,7 @@ const AddPost: FC = () => {
 
     await dispatch(fetchCreatePost(data));
     scrollToTop();
-    await dispatch(fetchPostsByUserId(userId));
+    await dispatch(fetchPostsByUserId());
   };
 
   const darkModeStyle = {

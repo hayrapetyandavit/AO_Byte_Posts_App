@@ -10,6 +10,7 @@ import {
 } from "../../redux/actions/commentsActions";
 import { PostType } from "../../types/postType";
 import { StateType } from "../../types/stateType";
+import { AppThunkDispatch } from "../../redux/store";
 import { CommentType } from "../../types/commentsType";
 import { fetchPostsByUserId } from "../../redux/actions/postsActions";
 
@@ -20,13 +21,15 @@ import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 import classes from "./style.module.scss";
 
+
 const Home: FC = () => {
   const { postsByUserId, currentPage, totalPages, error } = useSelector(
     (state: StateType) => state.posts
   );
   const { allComments } = useSelector((state: StateType) => state.comments);
   const { userId } = useSelector((state: StateType) => state.auth);
-  const dispatch = useDispatch();
+
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   useEffect(() => {
     if (userId) {

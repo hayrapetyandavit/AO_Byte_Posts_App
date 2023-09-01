@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { StateType } from "../../types/stateType";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
+import { AppThunkDispatch } from "../../redux/store";
 import { setTheme } from "../../redux/actions/themeAction";
 import { logoutUserAction } from "../../redux/actions/authActions";
 
@@ -13,7 +14,7 @@ import classes from "./style.module.scss";
 
 const Header: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   const theme = useSelector((state: StateType) => state.theme.theme);
   const { user, error } = useSelector((state: StateType) => state.auth);

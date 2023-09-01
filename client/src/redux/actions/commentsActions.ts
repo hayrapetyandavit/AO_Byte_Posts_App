@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import {
@@ -19,7 +18,7 @@ type UpdatedDataType = {
   [key: string]: CommentType[];
 };
 
-export const fetchAllComments: any = createAsyncThunk(
+export const fetchAllComments = createAsyncThunk(
   "comments/fetchAllComments",
   async (_, { dispatch }) => {
     dispatch({ type: All_COMMENTS_REQUEST });
@@ -29,7 +28,7 @@ export const fetchAllComments: any = createAsyncThunk(
   }
 );
 
-export const updateCommentsByPost: any = createAsyncThunk(
+export const updateCommentsByPost = createAsyncThunk(
   "comments/updateCommentsByPost",
   async (data: UpdatedDataType, { dispatch }) => {
     dispatch({ type: UPDATE_COMMENTS_BY_POST });
@@ -37,7 +36,7 @@ export const updateCommentsByPost: any = createAsyncThunk(
   }
 );
 
-export const updateCommentsByParent: any = createAsyncThunk(
+export const updateCommentsByParent = createAsyncThunk(
   "comments/updateCommentsByParent",
   async (data: UpdatedDataType, { dispatch }) => {
     dispatch({ type: UPDATE_COMMENTS_BY_PARENT });
@@ -45,7 +44,7 @@ export const updateCommentsByParent: any = createAsyncThunk(
   }
 );
 
-export const fetchCreateComment: any = createAsyncThunk(
+export const fetchCreateComment = createAsyncThunk(
   "comments/fetchCreateComment",
   async (data: Omit<CommentType, "id" | "rate" | "parentId">, { dispatch, getState }) => {
     dispatch({ type: CREATE_COMMENT });
@@ -56,7 +55,7 @@ export const fetchCreateComment: any = createAsyncThunk(
   }
 );
 
-export const fetchAddRateToComment: any = createAsyncThunk(
+export const fetchAddRateToComment = createAsyncThunk(
   "comments/fetchAddRateToComment",
   async (data: { rate: number; commentId: string }, { dispatch, getState }) => {
     dispatch({ type: ADD_RATE_TO_COMMENT });

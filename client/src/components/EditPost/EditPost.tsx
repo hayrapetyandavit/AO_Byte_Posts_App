@@ -7,10 +7,12 @@ import {
 } from "../../redux/actions/postsActions";
 import { PostType } from "../../types/postType";
 import { StateType } from "../../types/stateType";
+import { AppThunkDispatch } from "../../redux/store";
 
 import Button from "../Button/Button";
 
 import classes from "./style.module.scss";
+
 
 interface IProps {
   post: PostType;
@@ -25,7 +27,7 @@ const EditPost: FC<IProps> = (props) => {
 
   const { userId } = useSelector((state: StateType) => state.auth);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   useEffect(() => {
     setPostContent(post.content);
@@ -43,7 +45,7 @@ const EditPost: FC<IProps> = (props) => {
     };
 
     await dispatch(fetchUpdatePost(data));
-    await dispatch(fetchPostsByUserId(data.userId));
+    await dispatch(fetchPostsByUserId());
   };
   const hundleCancelButtonClick = () => {
     setEditMode(false);

@@ -11,8 +11,10 @@ import {
   fetchAllComments,
 } from "../../redux/actions/commentsActions";
 import { notify } from "../../utils/notifyMessage";
+import { AppThunkDispatch } from "../../redux/store";
 
 import classes from "./style.module.scss";
+
 
 interface IProps {
   commentId: string;
@@ -25,8 +27,8 @@ const StarRating: FC<IProps> = (props) => {
   const [hover, setHover] = useState(0);
   const [rating, setRating] = useState(currentRate);
 
-  const dispatch = useDispatch();
   const location = useLocation();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   useEffect(() => {
     setRating(currentRate);
@@ -45,7 +47,7 @@ const StarRating: FC<IProps> = (props) => {
     await dispatch(fetchAllComments());
 
     if (path === "/home") {
-      await dispatch(fetchPostsByUserId(localStorage.getItem("userId") || ""));
+      await dispatch(fetchPostsByUserId());
     } else {
       await dispatch(fetchPostsWithPagination());
     }

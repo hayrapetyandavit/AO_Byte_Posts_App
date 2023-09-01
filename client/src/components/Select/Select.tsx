@@ -9,9 +9,11 @@ import {
   setSort,
 } from "../../redux/actions/filtersAction";
 import { StateType } from "../../types/stateType";
+import { AppThunkDispatch } from "../../redux/store";
 import { fetchPostsWithPagination } from "../../redux/actions/postsActions";
 
 import classes from "./style.module.scss";
+
 
 interface IProps {
   title: string;
@@ -25,7 +27,7 @@ const Select: FC<IProps> = (props) => {
 
   const theme = useSelector((state: StateType) => state.theme.theme);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(e.target.value);

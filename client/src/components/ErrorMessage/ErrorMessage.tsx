@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { AppThunkDispatch } from "../../redux/store";
 import { logoutUserAction } from "../../redux/actions/authActions";
 
 import img from "./error.gif";
 
 import classes from "./style.module.scss";
+
 
 interface IProps {
   message: string;
@@ -15,8 +17,8 @@ interface IProps {
 const ErrorMessage: React.FC<IProps> = (props) => {
   const { message } = props;
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   useEffect(() => {
     if (message === "Please authenticate" || message === "Unauthenticated") {

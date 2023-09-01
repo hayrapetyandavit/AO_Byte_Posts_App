@@ -8,8 +8,9 @@ import {
   updateCommentsByParent,
 } from "../../redux/actions/commentsActions";
 import { PostType } from "../../types/postType";
-import { notify } from "../../utils/notifyMessage";
 import { StateType } from "../../types/stateType";
+import { notify } from "../../utils/notifyMessage";
+import { AppThunkDispatch } from "../../redux/store";
 import { CommentType } from "../../types/commentsType";
 import { fetchPostsWithPagination } from "../../redux/actions/postsActions";
 
@@ -20,12 +21,12 @@ import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import classes from "./style.module.scss";
 
 const Posts: FC = () => {
-  const dispatch = useDispatch();
-
   const { loading, postsWithPagination, currentPage, totalPages, error } =
     useSelector((state: StateType) => state.posts);
 
   const { allComments } = useSelector((state: StateType) => state.comments);
+
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   useEffect(() => {
     dispatch(fetchPostsWithPagination());

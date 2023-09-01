@@ -11,6 +11,7 @@ import {
   fetchDeletePost,
   fetchPostsWithPagination,
 } from "../../redux/actions/postsActions";
+import { AppThunkDispatch } from "../../redux/store";
 import { generateRateColor } from "../../utils/generateRateColor";
 
 import Button from "../Button/Button";
@@ -21,6 +22,7 @@ import AddComment from "../AddComment/AddComment";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 
 import classes from "./style.module.scss";
+
 
 interface IProps {
   handleCommentsSort?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -42,7 +44,7 @@ const Post: FC<IProps> = (props) => {
   const [showSkeleton, setShowSkeleton] = useState(true);
   const [updateCdomments, setUpdateCdomments] = useState(commentsByPost);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   useEffect(() => {
     const skeletonTimer = setTimeout(() => {

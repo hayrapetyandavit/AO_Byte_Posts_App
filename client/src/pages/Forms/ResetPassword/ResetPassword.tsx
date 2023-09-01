@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { StateType } from "../../../types/stateType";
+import { AppThunkDispatch } from "../../../redux/store";
 import { useInputChange } from "../../../hooks/useInputCHange";
 import { isValidateInput } from "../../../utils/isValidateInput";
 import { resetPasswordAction } from "../../../redux/actions/authActions";
@@ -21,7 +22,7 @@ const ResetPassword: FC = () => {
   });
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   const initialState = {
     email: "",

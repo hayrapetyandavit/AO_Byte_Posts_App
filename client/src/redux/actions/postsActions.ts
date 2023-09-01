@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   updatePostService,
@@ -18,7 +17,7 @@ export const CREATE_POST = "CREATE_POST";
 export const UPDATE_POST = "UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
 
-export const fetchPostsWithPagination: any = createAsyncThunk(
+export const fetchPostsWithPagination = createAsyncThunk(
   "posts/fetchPostsWithPagination",
   async (_, { dispatch, getState }) => {
     const { filters, posts } = getState() as StateType;
@@ -37,7 +36,7 @@ export const fetchPostsWithPagination: any = createAsyncThunk(
   }
 );
 
-export const fetchPostsByUserId: any = createAsyncThunk(
+export const fetchPostsByUserId = createAsyncThunk(
   "posts/fetchPostsByUserId",
   async (_, { dispatch, getState }) => {
     const { posts, auth } = getState() as StateType;
@@ -57,7 +56,7 @@ export const fetchPostsByUserId: any = createAsyncThunk(
   }
 );
 
-export const fetchPostsAuthors: any = createAsyncThunk(
+export const fetchPostsAuthors = createAsyncThunk(
   "posts/fetchPostsAuthors",
   async (_, { dispatch }) => {
     dispatch({ type: UPDATE_CURRENT_PAGE });
@@ -67,7 +66,7 @@ export const fetchPostsAuthors: any = createAsyncThunk(
   }
 );
 
-export const updateCurrentPage: any = createAsyncThunk(
+export const updateCurrentPage = createAsyncThunk(
   "posts/updateCurrentPage",
   async (data: number, { dispatch }) => {
     dispatch({ type: UPDATE_CURRENT_PAGE });
@@ -76,7 +75,7 @@ export const updateCurrentPage: any = createAsyncThunk(
   }
 );
 
-export const fetchCreatePost: any = createAsyncThunk(
+export const fetchCreatePost = createAsyncThunk(
   "posts/fetchCreatePost",
   async (data: Omit<PostType, "id">, { dispatch, getState }) => {
     dispatch({ type: CREATE_POST });
@@ -87,7 +86,7 @@ export const fetchCreatePost: any = createAsyncThunk(
   }
 );
 
-export const fetchUpdatePost: any = createAsyncThunk(
+export const fetchUpdatePost = createAsyncThunk(
   "posts/fetchUpdatePost",
   async (
     data: { title: string; content: string; id: string },
@@ -107,7 +106,7 @@ export const fetchUpdatePost: any = createAsyncThunk(
   }
 );
 
-export const fetchDeletePost: any = createAsyncThunk(
+export const fetchDeletePost = createAsyncThunk(
   "posts/fetchDeletePost",
   async (data: { id: string }, { dispatch, getState }) => {
     dispatch({ type: DELETE_POST });
