@@ -8,19 +8,17 @@ import { fetchPostsAuthors } from "../../redux/actions/postsActions";
 import Select from "../Select/Select";
 
 import classes from "./style.module.scss";
+import { categoriesMockData } from "../../constants/constants";
 
 const FilterBar: FC = () => {
-  const [user, setUser] = useState("");
   const [isFiltersShow, setFiltersShow] = useState(false);
+
   const theme = useSelector((state: StateType) => state.theme.theme);
   const { authors } = useSelector((state: StateType) => state.posts);
+  const { user } = useSelector((state: StateType) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setUser(localStorage.getItem("user") || "");
-  }, []);
 
   useEffect(() => {
     dispatch(fetchPostsAuthors());
@@ -62,7 +60,7 @@ const FilterBar: FC = () => {
         <div className={classes.filters}>
           <Select
             title="category"
-            value={["all", "programming", "space", "sport"]}
+            value={categoriesMockData}
             onClick={handleButtonClick}
           />
           <Select title="author" value={authors} onClick={handleButtonClick} />

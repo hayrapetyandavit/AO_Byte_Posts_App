@@ -65,7 +65,6 @@ const Select: FC<IProps> = (props) => {
                 value={item}
                 checked={selectedValue === item}
                 onChange={handleChange}
-                // onClick={() => props.onClick()}
                 className={theme === "dark" ? classes.darkMode : undefined}
               />
               <span>{item}</span>

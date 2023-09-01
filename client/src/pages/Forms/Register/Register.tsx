@@ -1,16 +1,19 @@
 import React, { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import { notify } from "../../../utils/notifyMessage";
-import { registerUser } from "../../../services/authService";
+import { StateType } from "../../../types/stateType";
 import { useInputChange } from "../../../hooks/useInputCHange";
 import { isValidateInput } from "../../../utils/isValidateInput";
+import { registerUserAction } from "../../../redux/actions/authActions";
 
 import View from "./View";
 
 import classes from "../style.module.scss";
 
 const Register: FC = () => {
+  const { message, error } = useSelector((state: StateType) => state.auth);
+
   const [fieldValidity, setFieldValidity] = useState({
     isNameValid: true,
     isEmailValid: true,
@@ -19,6 +22,7 @@ const Register: FC = () => {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const initialState = {
     name: "",
@@ -69,18 +73,13 @@ const Register: FC = () => {
       return;
     }
 
-    await registerUser({
-      name,
-      email,
-      password,
-      confirmPassword,
-    })
-      .then(() => {
-        navigate("/login");
-      })
-      .catch((error) => {
-        notify(error.message);
-      });
+    await dispatch(
+      registerUserAction({ name, email, password, confirmPassword })
+    );
+
+    if (!error && !message) {
+      navigate("/login");
+    }
   };
 
   const containerProps = {

@@ -6,7 +6,7 @@ export type AuthType = {
   isChecked?: boolean;
 };
 
-export const registerUser = async (data: AuthType) => {
+export const registerUserService = async (data: AuthType) => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}register`, {
     method: "POST",
     credentials: "include",
@@ -22,7 +22,7 @@ export const registerUser = async (data: AuthType) => {
   return response.json();
 };
 
-export const loginUser = async (data: AuthType) => {
+export const loginUserService = async (data: AuthType) => {
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("token");
 
@@ -49,7 +49,7 @@ export const loginUser = async (data: AuthType) => {
   return response.json();
 };
 
-export const forgotPassword = async ({ email }: { email: string }) => {
+export const forgotPasswordService = async (email: string) => {
   const response = await fetch(
     `${process.env.REACT_APP_API_URL}forgot-password`,
     {
@@ -68,7 +68,7 @@ export const forgotPassword = async ({ email }: { email: string }) => {
   return response.json();
 };
 
-export const resetPassword = async (data: AuthType) => {
+export const resetPasswordService = async (data: AuthType) => {
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("token");
 
@@ -93,7 +93,7 @@ export const resetPassword = async (data: AuthType) => {
   return response.json();
 };
 
-export const isAuthService = async () => {
+export const isAuthService = async (accessToken: string) => {
   const response = await fetch(
     `${process.env.REACT_APP_API_URL}check-session`,
     {
@@ -101,6 +101,7 @@ export const isAuthService = async () => {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     }
   );
@@ -115,12 +116,15 @@ export const isAuthService = async () => {
   return response.json();
 };
 
-export const logoutUser = async () => {
-  await fetch(`${process.env.REACT_APP_API_URL}logout`, {
-    method: "GET",
+export const logoutUserService = async (accessToken: string) => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}logout`, {
+    method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
   });
+
+  return response.json();
 };

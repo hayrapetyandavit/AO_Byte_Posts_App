@@ -19,6 +19,10 @@ interface IProps {
 const Comment: FC<IProps> = (props) => {
   const { id, userId, comments } = props;
 
+  const { commentsByParent } = useSelector(
+    (state: StateType) => state.comments
+  );
+
   const theme = useSelector((state: StateType) => state.theme.theme);
 
   const authorNameStyle =
@@ -32,9 +36,7 @@ const Comment: FC<IProps> = (props) => {
             return (
               <div className={classes.commentWrapp} key={genId()}>
                 <div className={classes.commentContent}>
-                  <p className={classes.comment} key={genId()}>
-                    {comment.content}
-                  </p>
+                  <p className={classes.comment}>{comment.content}</p>
                   <span className={classes.authorName} style={authorNameStyle}>
                     {comment.author}
                     <span>
@@ -44,15 +46,22 @@ const Comment: FC<IProps> = (props) => {
                 </div>
                 <StarRating commentId={comment.id} currentRate={comment.rate} />
                 <ReplyComment postId={id} parentId={comment.id} />
-                {comments[comment.id] &&
-                  comments[comment.id].map((replyComment) => {
+                {commentsByParent[comment.id] &&
+                  commentsByParent[comment.id].map((replyComment) => {
                     return (
-                      <div key={genId()}>
-                        <p className={classes.nestedComment} key={genId()}>
+                      <div className={classes.commentContent} key={genId()}>
+                        <p className={classes.nestedComment}>
                           {replyComment.content}
-                          {comment.author}
-                          {userId === comment.userId ? "Author" : undefined}
                         </p>
+                        <span
+                          className={classes.authorName}
+                          style={authorNameStyle}
+                        >
+                          {comment.author}
+                          <span>
+                            {userId === comment.userId ? "(author)" : undefined}
+                          </span>
+                        </span>
                       </div>
                     );
                   })}

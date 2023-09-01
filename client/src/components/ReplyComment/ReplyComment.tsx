@@ -1,6 +1,9 @@
 import React, { FC, useState } from "react";
+import { useSelector } from "react-redux";
 
 import AddComment from "../AddComment/AddComment";
+
+import { StateType } from "../../types/stateType";
 
 import classes from "./style.module.scss";
 
@@ -13,12 +16,14 @@ const ReplyComment: FC<IProps> = (props) => {
   const { postId, parentId } = props;
   const [isReply, setReply] = useState(false);
 
+  const { userId } = useSelector((state: StateType) => state.auth);
+
   const handleReplyClick = () => {
     setReply((prevState) => !prevState);
   };
 
-  if (!localStorage.getItem("userId")) {
-    return <p></p>;
+  if (!userId) {
+    return null;
   }
 
   return (

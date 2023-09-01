@@ -51,7 +51,8 @@ export const getPostsWithPaginationService = async (
 
 export const getPostsByUserIdService = async (
   userId: string,
-  currentPage: number
+  currentPage: number,
+  accessToken: string
 ) => {
   const response = await fetch(
     `${process.env.REACT_APP_API_URL}posts/${userId}?page=${currentPage}`,
@@ -60,9 +61,11 @@ export const getPostsByUserIdService = async (
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     }
   );
+
   if (!response.ok) {
     const errorMessage = await response.text();
     throw new Error(errorMessage);
@@ -85,12 +88,16 @@ export const getPostsAuthorsService = async () => {
   return response.json();
 };
 
-export const createPostService = async (data: Omit<PostType, "id">) => {
+export const createPostService = async (
+  data: Omit<PostType, "id">,
+  accessToken: string
+) => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}posts`, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(data),
   });
@@ -105,16 +112,19 @@ export const updatePostService = async (
   title: string,
   content: string,
   userId: string,
-  id: string
+  id: string,
+  accessToken: string
 ) => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}posts/${id}`, {
     method: "PUT",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify({ userId, title, content }),
   });
+
   if (!response.ok) {
     const errorMessage = await response.text();
     throw new Error(errorMessage);
@@ -122,12 +132,17 @@ export const updatePostService = async (
   return response.json();
 };
 
-export const deletePostService = async (userId: string, id: string) => {
+export const deletePostService = async (
+  userId: string,
+  id: string,
+  accessToken: string
+) => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}posts/${id}`, {
     method: "DELETE",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify({ userId }),
   });

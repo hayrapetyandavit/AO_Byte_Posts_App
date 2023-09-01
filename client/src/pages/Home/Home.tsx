@@ -24,15 +24,13 @@ const Home: FC = () => {
   const { postsByUserId, currentPage, totalPages, error } = useSelector(
     (state: StateType) => state.posts
   );
-  const { allComments, commentsByPost, commentsByParent } = useSelector(
-    (state: StateType) => state.allComments
-  );
+  const { allComments } = useSelector((state: StateType) => state.comments);
+  const { userId } = useSelector((state: StateType) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
     if (userId) {
-      dispatch(fetchPostsByUserId(userId));
+      dispatch(fetchPostsByUserId());
     }
     dispatch(fetchAllComments());
   }, [dispatch, currentPage]);
@@ -74,11 +72,6 @@ const Home: FC = () => {
     getCommentsByParent();
   }, [allComments]);
 
-  const containerProps = {
-    commentsByPost,
-    commentsByParent,
-  };
-
   if (error) {
     return <ErrorMessage message={error} />;
   }
@@ -87,7 +80,7 @@ const Home: FC = () => {
     <div className={classes.content}>
       <Link to="/">&#10554; go back to all posts</Link>
       {postsByUserId.map((post: PostType) => (
-        <Post {...containerProps} data={post} key={genId()} />
+        <Post data={post} key={genId()} />
       ))}
       <Paginate
         previousLabel={"Prev"}

@@ -1,18 +1,21 @@
 import React, { FC, useState } from "react";
+import { useDispatch } from "react-redux";
 
-import { notify } from "../../../utils/notifyMessage";
 import { useInputChange } from "../../../hooks/useInputCHange";
 import { isValidateInput } from "../../../utils/isValidateInput";
-import { forgotPassword } from "../../../services/authService";
+import { forgotPasswordAction } from "../../../redux/actions/authActions";
 
 import View from "./View";
 
 import classes from "../style.module.scss";
 
 const ForgotPassword: FC = () => {
+
   const [fieldValidity, setFieldValidity] = useState({
     isEmailValid: true,
   });
+
+  const dispatch = useDispatch();
 
   const initialState = {
     email: "",
@@ -40,13 +43,7 @@ const ForgotPassword: FC = () => {
       return;
     }
 
-    await forgotPassword({ email })
-      .then((res) => {
-        notify(res.message);
-      })
-      .catch((error) => {
-        notify(error.message);
-      });
+    await dispatch(forgotPasswordAction(email));
   };
 
   const containerProps = {

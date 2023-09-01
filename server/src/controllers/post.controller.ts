@@ -29,7 +29,6 @@ export const getPostsByUserIdController = async (
 ) => {
   try {
     const result = await getPostsByUserId(req.query.page, req.params.userId);
-    console.log(req.params.id);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ error: "Failed to get posts!" });

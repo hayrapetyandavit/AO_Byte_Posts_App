@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const SET_CATEGORY_FILTER = "SET_CATEGORY_FILTER";
@@ -5,7 +6,7 @@ export const SET_AUTHOR_FILTER = "SET_AUTHOR_FILTER";
 export const SET_DATE_FILTER = "SET_DATE_FILTER";
 export const SET_SORT = "SET_SORT";
 
-export const setCategoryFilter = createAsyncThunk(
+export const setCategoryFilter: any = createAsyncThunk(
   "filters/setCategoryFilter",
   async (data: string, { dispatch }) => {
     dispatch({ type: SET_CATEGORY_FILTER });
@@ -13,7 +14,7 @@ export const setCategoryFilter = createAsyncThunk(
   }
 );
 
-export const setAuthorFilter = createAsyncThunk(
+export const setAuthorFilter: any = createAsyncThunk(
   "filters/setAuthorFilter",
   async (data: string, { dispatch }) => {
     dispatch({ type: SET_AUTHOR_FILTER });
@@ -21,7 +22,7 @@ export const setAuthorFilter = createAsyncThunk(
   }
 );
 
-export const setDateFilter = createAsyncThunk(
+export const setDateFilter: any = createAsyncThunk(
   "filters/setDateFilter",
   async (data: string, { dispatch }) => {
     dispatch({ type: SET_DATE_FILTER });
@@ -58,7 +59,7 @@ export const setDateFilter = createAsyncThunk(
   }
 );
 
-export const setSort = createAsyncThunk(
+export const setSort: any = createAsyncThunk(
   "filters/setSort",
   async (data: string, { dispatch }) => {
     dispatch({ type: SET_SORT });

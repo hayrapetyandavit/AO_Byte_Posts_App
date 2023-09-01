@@ -1,22 +1,27 @@
 import React, { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import { notify } from "../../../utils/notifyMessage";
-import { resetPassword } from "../../../services/authService";
+import { StateType } from "../../../types/stateType";
 import { useInputChange } from "../../../hooks/useInputCHange";
 import { isValidateInput } from "../../../utils/isValidateInput";
+import { resetPasswordAction } from "../../../redux/actions/authActions";
 
 import View from "./View";
 
 import classes from "../style.module.scss";
 
 const ResetPassword: FC = () => {
+  const { message, error } = useSelector((state: StateType) => state.auth);
+
   const [fieldValidity, setFieldValidity] = useState({
     isEmailValid: true,
     isPasswordValid: true,
     isConfirmPasswordValid: true,
   });
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const initialState = {
     email: "",
@@ -60,13 +65,11 @@ const ResetPassword: FC = () => {
       return;
     }
 
-    await resetPassword({ email, password, confirmPassword })
-      .then(() => {
-        navigate("/login");
-      })
-      .catch((error) => {
-        notify(error.message);
-      });
+    await dispatch(resetPasswordAction({ email, password, confirmPassword }));
+
+    if (!error && !message) {
+      navigate("/login");
+    }
   };
 
   const containerProps = {

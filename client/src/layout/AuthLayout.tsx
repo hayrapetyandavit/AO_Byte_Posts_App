@@ -1,24 +1,25 @@
 import React, { FC, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import { isAuthService } from "../services/authService";
+import { StateType } from "../types/stateType";
 
 import Header from "../components/Header/Header";
 
-const AuthLayout: FC = () => {
-  useEffect(() => {
-    isAuthService().then((res) => {
-      if (!res.valid) {
-        localStorage.removeItem("user");
-        localStorage.removeItem("userId");
+import { isAuthAction } from "../redux/actions/authActions";
 
-        window.location.reload();
-      }
-    });
+const AuthLayout: FC = () => {
+  const { user } = useSelector((state: StateType) => state.auth);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    dispatch(isAuthAction() as any);
   }, []);
 
-  if (localStorage.getItem("user")) {
+  if (user) {
     return (
       <>
         <Header />

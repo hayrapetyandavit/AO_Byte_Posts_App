@@ -60,21 +60,21 @@ export const login = async (body: IReqBody) => {
   if (!email || !password) {
     return {
       code: 400,
-      messafe: "Email and password are required!",
+      message: "Email and password are required!",
     };
   }
 
   if (!user) {
     return {
       code: 400,
-      messafe: "Invalid email or password!",
+      message: "Invalid email or password!",
     };
   }
 
   if (!user.isVerify) {
     return {
       code: 400,
-      messafe: "Need to be verified!",
+      message: "Need to be verified!",
     };
   }
 
@@ -83,9 +83,9 @@ export const login = async (body: IReqBody) => {
   if (compare) {
     const expiresIn = isChecked ? "10d" : "15m";
 
-    const expiresMaxAge = isChecked
-      ? authConfig.jwtRememberExpiration * 1000000
-      : authConfig.jwtExpiration * 1000;
+    // const expiresMaxAge = isChecked
+    //   ? authConfig.jwtRememberExpiration * 1000000
+    //   : authConfig.jwtExpiration * 1000;
 
     const accessToken = jwt.sign(
       {
@@ -101,13 +101,13 @@ export const login = async (body: IReqBody) => {
     return {
       id: user.id,
       name: user.name,
-      expiresMaxAge,
+      // expiresMaxAge,
       accessToken,
     };
   } else {
     return {
       code: 400,
-      messafe: "Invalid email or password!",
+      message: "Invalid email or password!",
     };
   }
 };
@@ -119,7 +119,7 @@ export const verifyLogin = async (body: IReqBody, reqtoken: string) => {
   if (!email || !password) {
     return {
       code: 400,
-      messafe: "Email and password are required!",
+      message: "Email and password are required!",
     };
   }
 
@@ -128,7 +128,7 @@ export const verifyLogin = async (body: IReqBody, reqtoken: string) => {
   if (!user) {
     return {
       code: 400,
-      messafe: "Invalid email or password!",
+      message: "Invalid email or password!",
     };
   }
 
@@ -138,7 +138,7 @@ export const verifyLogin = async (body: IReqBody, reqtoken: string) => {
     if (!compareToken) {
       return {
         code: 400,
-        messafe: "Email is not valid!",
+        message: "Email is not valid!",
       };
     }
 
@@ -150,7 +150,7 @@ export const verifyLogin = async (body: IReqBody, reqtoken: string) => {
   if (!user.isVerify) {
     return {
       code: 400,
-      messafe: "Need to be verified!",
+      message: "Need to be verified!",
     };
   }
 
@@ -183,7 +183,7 @@ export const verifyLogin = async (body: IReqBody, reqtoken: string) => {
   } else {
     return {
       code: 400,
-      messafe: "Invalid email or password!",
+      message: "Invalid email or password!",
     };
   }
 };
@@ -195,7 +195,7 @@ export const forgotPassword = async (body: IReqBody) => {
   if (!user) {
     return {
       code: 404,
-      messafe: "User not found.",
+      message: "User not found.",
     };
   }
   try {
@@ -216,7 +216,7 @@ export const forgotPassword = async (body: IReqBody) => {
   } catch (err) {
     return {
       code: 500,
-      messafe: "Internal Server Error",
+      message: "Internal Server Error",
     };
   }
 };

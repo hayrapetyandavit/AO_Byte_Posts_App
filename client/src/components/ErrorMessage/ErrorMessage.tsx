@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import img from "./error.gif";
 
@@ -9,10 +9,18 @@ interface IProps {
 }
 
 const ErrorMessage: React.FC<IProps> = (props) => {
+  const { message } = props;
+
+  useEffect(() => {
+    if (message === "Please authenticate") {
+      localStorage.removeItem("user");
+      localStorage.removeItem("userId");
+    }
+  }, []);
   return (
     <div className={classes.content}>
       <img className={classes.image} src={img} alt="Error" />
-      <h2 className={classes.title}>{props.message}</h2>
+      <h2 className={classes.title}>{message}</h2>
     </div>
   );
 };

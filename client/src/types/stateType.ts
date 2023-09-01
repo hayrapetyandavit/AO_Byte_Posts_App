@@ -2,6 +2,15 @@ import { PostType } from "./postType";
 import { CommentType } from "./commentsType";
 
 export type StateType = {
+  auth: {
+    user: string;
+    userId: string;
+    code: number | null;
+    message: string;
+    error: string;
+    accessToken: string;
+  };
+
   theme: { theme: "dark" | "light" };
 
   idArray: { idArray: string[] };
@@ -17,7 +26,7 @@ export type StateType = {
     error: string;
   };
 
-  allComments: {
+  comments: {
     loading: boolean;
     allComments: CommentType[];
     commentsByPost: { [key: string]: CommentType[] };

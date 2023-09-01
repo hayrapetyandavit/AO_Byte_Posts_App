@@ -88,12 +88,11 @@ export const getPostsWithPagination = async (query: IPostsQuery) => {
 };
 
 export const getPostsByUserId = async (
-  query: IPostsQuery | any,
+  queryPage: IPostsQuery | any,
   paramsId: string
 ) => {
-  const page = parseInt(query.page) || 1;
+  const page = parseInt(queryPage) || 1;
   const userId = paramsId;
-
   const itemsPerPage = 3;
 
   const skip = (page - 1) * itemsPerPage;

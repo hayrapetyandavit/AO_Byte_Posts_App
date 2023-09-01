@@ -1,37 +1,30 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { StateType } from "../../types/stateType";
-import { logoutUser } from "../../services/authService";
-import { setTheme } from "../../redux/actions/themeAction";
-
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
+import { setTheme } from "../../redux/actions/themeAction";
+import { logoutUserAction } from "../../redux/actions/authActions";
 
 import logo from "../../assets/images/aobyte-logo.webp";
 
 import classes from "./style.module.scss";
 
 const Header: FC = () => {
-  const [user, setUser] = useState("");
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const theme = useSelector((state: StateType) => state.theme.theme);
+  const { user, error } = useSelector((state: StateType) => state.auth);
 
-  useEffect(() => {
-    setUser(localStorage.getItem("user") || "");
-  }, []);
-
-  const isLogout = () => {
+  const handleLogoutClick = async () => {
     if (user) {
-      logoutUser();
-      localStorage.removeItem("user");
-      localStorage.removeItem("userId");
+      await dispatch(logoutUserAction());
     }
-
-    navigate("/login");
+    if (!error) {
+      navigate("/login");
+    }
   };
 
   const handleSwitchClick = () => {
@@ -59,7 +52,7 @@ const Header: FC = () => {
             className={classes.userLog}
             title={user ? "Log Out" : "Log In"}
             style={userLogStyle}
-            onClick={isLogout}
+            onClick={handleLogoutClick}
           >
             {user ? "Log Out" : "Log In"}
           </h2>

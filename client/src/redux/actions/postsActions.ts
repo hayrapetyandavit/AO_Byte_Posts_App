@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   updatePostService,
@@ -17,7 +18,7 @@ export const CREATE_POST = "CREATE_POST";
 export const UPDATE_POST = "UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
 
-export const fetchPostsWithPagination = createAsyncThunk(
+export const fetchPostsWithPagination: any = createAsyncThunk(
   "posts/fetchPostsWithPagination",
   async (_, { dispatch, getState }) => {
     const { filters, posts } = getState() as StateType;
@@ -36,14 +37,18 @@ export const fetchPostsWithPagination = createAsyncThunk(
   }
 );
 
-export const fetchPostsByUserId = createAsyncThunk(
+export const fetchPostsByUserId: any = createAsyncThunk(
   "posts/fetchPostsByUserId",
-  async (userId: string, { dispatch, getState }) => {
-    const { posts } = getState() as StateType;
+  async (_, { dispatch, getState }) => {
+    const { posts, auth } = getState() as StateType;
 
     dispatch({ type: POSTS_WITH_PAGINATION_REQUEST });
 
-    const response = await getPostsByUserIdService(userId, posts.currentPage);
+    const response = await getPostsByUserIdService(
+      auth.userId,
+      posts.currentPage,
+      auth.accessToken
+    );
 
     return {
       data: response.data,
@@ -52,7 +57,7 @@ export const fetchPostsByUserId = createAsyncThunk(
   }
 );
 
-export const fetchPostsAuthors = createAsyncThunk(
+export const fetchPostsAuthors: any = createAsyncThunk(
   "posts/fetchPostsAuthors",
   async (_, { dispatch }) => {
     dispatch({ type: UPDATE_CURRENT_PAGE });
@@ -62,7 +67,7 @@ export const fetchPostsAuthors = createAsyncThunk(
   }
 );
 
-export const updateCurrentPage = createAsyncThunk(
+export const updateCurrentPage: any = createAsyncThunk(
   "posts/updateCurrentPage",
   async (data: number, { dispatch }) => {
     dispatch({ type: UPDATE_CURRENT_PAGE });
@@ -71,40 +76,48 @@ export const updateCurrentPage = createAsyncThunk(
   }
 );
 
-export const fetchCreatePost = createAsyncThunk(
+export const fetchCreatePost: any = createAsyncThunk(
   "posts/fetchCreatePost",
-  async (data: Omit<PostType, "id">, { dispatch }) => {
+  async (data: Omit<PostType, "id">, { dispatch, getState }) => {
     dispatch({ type: CREATE_POST });
+    const { auth } = getState() as StateType;
 
-    const response = await createPostService(data);
+    const response = await createPostService(data, auth.accessToken);
     return response;
   }
 );
 
-export const fetchUpdatePost = createAsyncThunk(
+export const fetchUpdatePost: any = createAsyncThunk(
   "posts/fetchUpdatePost",
   async (
-    data: { title: string; content: string; userId: string; id: string },
-    { dispatch }
+    data: { title: string; content: string; id: string },
+    { dispatch, getState }
   ) => {
     dispatch({ type: UPDATE_POST });
+    const { auth } = getState() as StateType;
 
     const response = await updatePostService(
       data.title,
       data.content,
-      data.userId,
-      data.id
+      auth.userId,
+      data.id,
+      auth.accessToken
     );
     return response;
   }
 );
 
-export const fetchDeletePost = createAsyncThunk(
+export const fetchDeletePost: any = createAsyncThunk(
   "posts/fetchDeletePost",
-  async (data: { userId: string; id: string }, { dispatch }) => {
+  async (data: { id: string }, { dispatch, getState }) => {
     dispatch({ type: DELETE_POST });
+    const { auth } = getState() as StateType;
 
-    const response = await deletePostService(data.userId, data.id);
+    const response = await deletePostService(
+      auth.userId,
+      data.id,
+      auth.accessToken
+    );
     return response;
   }
 );

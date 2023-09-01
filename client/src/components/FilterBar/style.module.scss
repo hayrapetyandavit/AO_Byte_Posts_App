@@ -30,7 +30,7 @@
     cursor: pointer;
   }
   .closeIcon:hover {
-    transform: matrix(0, 1, 1, 0, 0, 0);
+    box-shadow: 0 0 4px -0 $purple;
   }
 }
 
@@ -130,6 +130,15 @@
   .darkContent {
     width: 40%;
   }
+  .content,
+  .darkContent {
+    .closeIcon {
+      top: 4%;
+      left: 93%;
+      width: 40px;
+      height: 40px;
+    }
+  }
 }
 
 @media (max-width: 550.98px) {
@@ -138,7 +147,8 @@
   .avatar,
   .darkAvatar {
     top: 100px;
-    left: 452px;
+    left: 86%;
+
     background-color: $white;
     &::before {
       top: -1000%;
@@ -148,10 +158,25 @@
   .avatar,
   .darkAvatar {
     top: 100px;
-    left: 402px;
+    left: 75%;
   }
   .darkFlag,
   .darkAvatar {
     background-color: $bg-dark;
+  }
+  .content,
+  .darkContent {
+    .closeIcon {
+      top: 4%;
+      left: 92%;
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+@media (max-width: 393.98px) {
+  .avatar,
+  .darkAvatar {
+    left: 70%;
   }
 }

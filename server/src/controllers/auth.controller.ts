@@ -23,16 +23,17 @@ export const loginController = async (req: Request, res: Response) => {
   try {
     const result = await login(req.body);
 
-    if (result.accessToken) {
-      res.cookie("access_token", result.accessToken, {
-        httpOnly: true,
-        maxAge: result.expiresMaxAge,
-      });
-      return res.status(200).send({
-        id: result.id,
-        name: result.name,
-      });
-    }
+    // if (result.accessToken) {
+    //   res.cookie("access_token", result.accessToken, {
+    //     httpOnly: true,
+    //     maxAge: result.expiresMaxAge,
+    //     sameSite: "strict",
+    //   });
+    //   return res.status(200).send({
+    //     id: result.id,
+    //     name: result.name,
+    //   });
+    // }
     res.status(200).send(result);
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
@@ -46,6 +47,7 @@ export const verifyLoginController = async (req: Request, res: Response) => {
       res.cookie("access_token", result.accessToken, {
         httpOnly: true,
         maxAge: result.expiresMaxAge,
+        sameSite: "strict",
       });
       return res.status(200).send({
         id: result.id,
@@ -77,7 +79,7 @@ export const resetPasswordController = async (req: Request, res: Response) => {
 export const isAuthController = async (req: Request, res: Response) => {
   try {
     const result = await isAuth();
-    res.json(result);
+    res.status(200).send(result);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
@@ -86,7 +88,7 @@ export const isAuthController = async (req: Request, res: Response) => {
 export const logoutController = async (req: Request, res: Response) => {
   try {
     const result = await logout();
-    res.clearCookie("access_token");
+    res.clearCookie("refresh_token");
 
     return res.status(200).send(result);
   } catch (error: any) {

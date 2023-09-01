@@ -18,6 +18,7 @@ import classes from "./style.module.scss";
 
 const AddPost: FC = () => {
   const theme = useSelector((state: StateType) => state.theme.theme);
+  const { user, userId } = useSelector((state: StateType) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -32,9 +33,6 @@ const AddPost: FC = () => {
   const handleButtonClick = async () => {
     const { title, content, category } = values;
 
-    const author = localStorage.getItem("user") || "";
-    const userId = localStorage.getItem("userId") || "";
-
     if (!title || !content) {
       return notify("Inputs are required!");
     }
@@ -43,7 +41,7 @@ const AddPost: FC = () => {
       title,
       content,
       category,
-      author,
+      author: user,
       userId,
     };
 

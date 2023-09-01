@@ -13,13 +13,15 @@ export const getAllCommentsService = async (): Promise<Response> => {
 };
 
 export const createCommentService = async (
-  data: Omit<CommentType, "id" | "rate" | "parentId">
+  data: Omit<CommentType, "id" | "rate" | "parentId">,
+  accessToken: string
 ) => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}comments`, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(data),
   });
@@ -33,7 +35,8 @@ export const createCommentService = async (
 
 export const addRateToCommentService = async (
   rate: number,
-  commentId: string
+  commentId: string,
+  accessToken: string
 ) => {
   const response = await fetch(
     `${process.env.REACT_APP_API_URL}comments/${commentId}`,
@@ -42,6 +45,7 @@ export const addRateToCommentService = async (
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ rate }),
     }

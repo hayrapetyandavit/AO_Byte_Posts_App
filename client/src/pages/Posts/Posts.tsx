@@ -25,9 +25,7 @@ const Posts: FC = () => {
   const { loading, postsWithPagination, currentPage, totalPages, error } =
     useSelector((state: StateType) => state.posts);
 
-  const { allComments, commentsByPost, commentsByParent } = useSelector(
-    (state: StateType) => state.allComments
-  );
+  const { allComments } = useSelector((state: StateType) => state.comments);
 
   useEffect(() => {
     dispatch(fetchPostsWithPagination());
@@ -74,11 +72,6 @@ const Posts: FC = () => {
     getCommentsByParent();
   }, [allComments]);
 
-  const containerProps = {
-    commentsByPost,
-    commentsByParent,
-  };
-
   if (!loading && postsWithPagination.length === 0) {
     return (
       <div className={classes.emptyData}>
@@ -94,7 +87,7 @@ const Posts: FC = () => {
   return (
     <div className={classes.content}>
       {postsWithPagination.map((post: PostType) => (
-        <Post {...containerProps} data={post} key={genId()} />
+        <Post data={post} key={genId()} />
       ))}
       <Paginate
         previousLabel={"Prev"}

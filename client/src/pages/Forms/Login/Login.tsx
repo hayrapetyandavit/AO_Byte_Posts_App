@@ -1,17 +1,21 @@
 import React, { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import { notify } from "../../../utils/notifyMessage";
-import { loginUser } from "../../../services/authService";
+import { StateType } from "../../../types/stateType";
 import { useInputChange } from "../../../hooks/useInputCHange";
 import { isValidateInput } from "../../../utils/isValidateInput";
+import { loginUserAction } from "../../../redux/actions/authActions";
 
 import View from "./View";
 
 import classes from "../style.module.scss";
 
 const Login: FC = () => {
+  const { message, error } = useSelector((state: StateType) => state.auth);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [fieldValidity, setFieldValidity] = useState({
     isEmailValid: true,
@@ -55,23 +59,11 @@ const Login: FC = () => {
       return;
     }
 
-    await loginUser({
-      email,
-      password,
-      isChecked,
-    })
-      .then((data) => {
-        if (data.name) {
-          localStorage.setItem("user", data.name);
-          localStorage.setItem("userId", data.id);
-        }
-      })
-      .then(() => {
-        navigate("/home");
-      })
-      .catch((error) => {
-        notify(error.message);
-      });
+    await dispatch(loginUserAction({ email, password, isChecked }));
+
+    if (!error && !message) {
+      navigate("/home");
+    }
   };
 
   const containerProps = {

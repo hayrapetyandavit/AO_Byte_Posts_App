@@ -33,10 +33,8 @@ const Post: FC<IProps> = (props) => {
     (state: StateType) => state.posts
   );
   const theme = useSelector((state: StateType) => state.theme.theme);
-
-  const { commentsByPost } = useSelector(
-    (state: StateType) => state.allComments
-  );
+  const { userId } = useSelector((state: StateType) => state.auth);
+  const { commentsByPost } = useSelector((state: StateType) => state.comments);
 
   const [sortType, setSortType] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -56,11 +54,12 @@ const Post: FC<IProps> = (props) => {
 
   const handleDeletePost = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const data = {
-      userId: localStorage.getItem("userId") || "",
+      userId,
       id: e.currentTarget.id,
     };
 
     await dispatch(fetchDeletePost(data));
+
     if (message) {
       notify(message);
     }
@@ -113,7 +112,7 @@ const Post: FC<IProps> = (props) => {
         <span className={classes.authorName} style={authorNameStyle}>
           {data.author} (author)
         </span>
-        {data.userId === localStorage.getItem("userId") ? (
+        {data.userId === userId ? (
           <>
             <Button
               value="&#10005;"
@@ -128,8 +127,8 @@ const Post: FC<IProps> = (props) => {
                   onCancel={onCancel}
                 />,
                 document.getElementById("modal-root") as
-                | Element
-                | DocumentFragment
+                  | Element
+                  | DocumentFragment
               )}
             <Button
               value="&#9998;"
@@ -147,7 +146,7 @@ const Post: FC<IProps> = (props) => {
       <p className={classes.text}>{data.content}</p>
       <div className={classes.comments}>
         <div className={classes.btnGroup}>
-          {localStorage.getItem("userId") ? (
+          {userId ? (
             <AddComment
               postId={data.id}
               handleCommentsSort={handleCommentsSort}
@@ -157,7 +156,9 @@ const Post: FC<IProps> = (props) => {
           )}
         </div>
         <div className={classes.spanGroup}>
-          {data.edited && <span className={classes.edited}>edited &#10003;</span>}
+          {data.edited && (
+            <span className={classes.edited}>edited &#10003;</span>
+          )}
           <span
             className={classes.rate}
             style={{
