@@ -132,6 +132,29 @@ export const updatePostService = async (
   return response.json();
 };
 
+export const updatePublishedPostService = async (
+  isPublic: boolean,
+  userId: string,
+  id: string,
+  accessToken: string
+) => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}posts/${id}`, {
+    method: "PATCH",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({ userId, isPublic }),
+  });
+
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
+  return response.json();
+};
+
 export const deletePostService = async (
   userId: string,
   id: string,

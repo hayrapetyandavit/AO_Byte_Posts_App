@@ -1,5 +1,6 @@
 import PostModel from "../models/post.model";
 import CommentModel from "../models/comment.model";
+import UserModel from "../models/user.model";
 
 export const getAllComments = async () => {
   const comments = await CommentModel.find().sort({ createdAt: -1 });
@@ -16,6 +17,7 @@ export const getAllComments = async () => {
     userId: comment.userId,
     postId: comment.postId,
     parentId: comment.parentId || null,
+    edited: comment.edited,
   }));
 
   return mongoDTO;
@@ -78,11 +80,62 @@ export const addRateToComment = async (body: any, commentId: string) => {
   const post = await PostModel.findById(comment.postId);
 
   if (post) {
-    const comments = await CommentModel.find({ postId: post._id });
+    const comments = await CommentModel.find({
+      postId: post._id,
+      parentId: { $exists: false },
+    });
+
     const totalRate = comments.reduce((sum, c) => sum + c.rate, 0);
+
     post.totalRate = Math.round(totalRate / comments.length);
     await post.save();
   }
 
   return updatedComment;
+};
+
+async function getUserAndComment(userId: string, commentId: string) {
+  const [user, comment] = await Promise.all([
+    UserModel.findById(userId),
+    CommentModel.findById(commentId),
+  ]);
+
+  return { user, comment };
+}
+
+export const updateComment = async (
+  body: { userId: string; content: string },
+  paramsId: string
+) => {
+  const id = paramsId;
+  const { userId, content } = body;
+
+  const { user, comment } = await getUserAndComment(userId, id);
+
+  if (user && comment) {
+    await CommentModel.updateOne(
+      { _id: id },
+      { content: content, edited: true }
+    );
+    return { code: 201, message: "Comment updated successfully!" };
+  } else {
+    return { code: 403, message: "Permission denied" };
+  }
+};
+
+export const deleteComment = async (
+  body: { userId: string },
+  paramsId: string
+) => {
+  const id = paramsId;
+  const { userId } = body;
+
+  const { user, comment } = await getUserAndComment(userId, id);
+
+  if (user && comment) {
+    await CommentModel.deleteOne({ _id: id });
+    return { code: 201, message: "Comment deleted successfully!" };
+  } else {
+    return { code: 403, message: "Permission denied" };
+  }
 };

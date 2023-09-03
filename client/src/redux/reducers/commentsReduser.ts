@@ -6,6 +6,8 @@ import {
   updateCommentsByParent,
   fetchCreateComment,
   fetchAddRateToComment,
+  fetchUpdateComment,
+  fetchDeleteComment,
 } from "../actions/commentsActions";
 import { CommentType } from "../../types/commentsType";
 
@@ -14,6 +16,7 @@ interface IState {
   allComments: CommentType[];
   commentsByPost: { [key: string]: CommentType[] };
   commentsByParent: { [key: string]: CommentType[] };
+  message: string;
   error: string;
 }
 
@@ -22,6 +25,7 @@ const initialState: IState = {
   allComments: [],
   commentsByPost: {},
   commentsByParent: {},
+  message: "",
   error: "",
 };
 
@@ -70,7 +74,23 @@ const commentsSlice = createSlice({
         (state, action: PayloadAction<{ [key: string]: CommentType[] }>) => {
           state.commentsByParent = action.payload;
         }
-      );
+      )
+
+      .addCase(fetchUpdateComment.pending, () => {})
+      .addCase(fetchUpdateComment.fulfilled, (state, action) => {
+        state.message = action.payload.message;
+      })
+      .addCase(fetchUpdateComment.rejected, (state, action) => {
+        state.error = action.error.message || "An error occurred.";
+      })
+
+      .addCase(fetchDeleteComment.pending, () => {})
+      .addCase(fetchDeleteComment.fulfilled, (state, action) => {
+        state.message = action.payload.message;
+      })
+      .addCase(fetchDeleteComment.rejected, (state, action) => {
+        state.error = action.error.message || "An error occurred.";
+      });
   },
 });
 

@@ -50,6 +50,7 @@ export const getPostsWithPagination = async (query: IPostsQuery) => {
           }
         : {},
     ],
+    isPublic: true,
   };
 
   const filteredResults = await PostModel.aggregate([
@@ -154,6 +155,7 @@ interface IUpdatePostBody {
   title: string;
   content: string;
   userId: string;
+  isPublic?: boolean;
 }
 
 export const updatePost = async (body: IUpdatePostBody, paramsId: string) => {
@@ -168,6 +170,29 @@ export const updatePost = async (body: IUpdatePostBody, paramsId: string) => {
       { title: title, content: content, edited: true }
     );
     return { code: 201, message: "Post updated successfully!" };
+  } else {
+    return { code: 403, message: "Permission denied" };
+  }
+};
+
+export const updatePublishedPost = async (
+  body: IUpdatePostBody,
+  paramsId: string
+) => {
+  const id = paramsId;
+  const { userId, isPublic } = body;
+
+  const { user, post } = await getUserAndPost(userId, id);
+
+  if (user && post) {
+    await PostModel.updateOne({ _id: id }, { isPublic: isPublic });
+
+    return {
+      code: 201,
+      message: isPublic
+        ? "Post published successfully!"
+        : "Post removed from public posts successfully!",
+    };
   } else {
     return { code: 403, message: "Permission denied" };
   }

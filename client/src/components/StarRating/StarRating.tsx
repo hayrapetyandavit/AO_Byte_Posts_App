@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   fetchPostsByUserId,
@@ -10,6 +10,7 @@ import {
   fetchAddRateToComment,
   fetchAllComments,
 } from "../../redux/actions/commentsActions";
+import { StateType } from "../../types/stateType";
 import { notify } from "../../utils/notifyMessage";
 import { AppThunkDispatch } from "../../redux/store";
 
@@ -27,6 +28,8 @@ const StarRating: FC<IProps> = (props) => {
   const [hover, setHover] = useState(0);
   const [rating, setRating] = useState(currentRate);
 
+  const {user} = useSelector((state: StateType) => state.auth);
+
   const location = useLocation();
   const dispatch = useDispatch<AppThunkDispatch>();
 
@@ -35,7 +38,7 @@ const StarRating: FC<IProps> = (props) => {
   }, [currentRate]);
 
   const handleClick = async (index: number) => {
-    if (!localStorage.getItem("userId")) {
+    if (!user) {
       return notify("Please log in for add rating!");
     }
 

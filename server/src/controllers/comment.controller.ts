@@ -3,7 +3,9 @@ import { Request, Response } from "express";
 import {
   addRateToComment,
   createComment,
+  deleteComment,
   getAllComments,
+  updateComment,
 } from "../services/comment.service";
 
 export const getAllCommentsController = async (req: Request, res: Response) => {
@@ -33,5 +35,25 @@ export const addRateToCommentController = async (
     res.status(200).send(result);
   } catch (error) {
     res.status(500).json({ message: "Error adding rate to comment" });
+  }
+};
+
+export const updateCommentController = async (req: Request, res: Response) => {
+  try {
+    const result = await updateComment(req.body, req.params.id);
+
+    return res.status(200).send(result);
+  } catch (error) {
+    res.status(500).send({ message: "Failed to update post" });
+  }
+};
+
+export const deleteCommentController = async (req: Request, res: Response) => {
+  try {
+    const result = await deleteComment(req.body, req.params.id);
+
+    return res.status(200).send(result);
+  } catch (error) {
+    res.status(500).send({ message: "Failed to delete post" });
   }
 };

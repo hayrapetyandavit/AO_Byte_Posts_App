@@ -10,3 +10,10 @@
   visibility: hidden;
   transition: visibility 0.3s ease;
 }
+
+@media (max-width: 393.98px) {
+  .errorMsg {
+    font-size: 11px;
+    letter-spacing: 1;
+  }
+}

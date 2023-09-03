@@ -14,7 +14,6 @@ import Button from "../Button/Button";
 
 import classes from "./style.module.scss";
 
-
 interface IProps {
   postId: string;
   parentId?: string;
@@ -50,7 +49,7 @@ const AddComment: FC<IProps> = (props) => {
       content,
       postId,
       userId,
-      author: user
+      author: user,
     };
 
     if (props.parentId) {

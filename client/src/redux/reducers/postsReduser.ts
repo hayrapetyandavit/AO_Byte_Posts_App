@@ -8,6 +8,7 @@ import {
   fetchDeletePost,
   fetchUpdatePost,
   updateCurrentPage,
+  fetchUpdatePublishPost,
 } from "../actions/postsActions";
 
 interface IState {
@@ -98,8 +99,18 @@ const postsSlice = createSlice({
       })
 
       .addCase(fetchUpdatePost.pending, () => {})
-      .addCase(fetchUpdatePost.fulfilled, () => {})
+      .addCase(fetchUpdatePost.fulfilled, (state, action) => {
+        state.message = action.payload.message;
+      })
       .addCase(fetchUpdatePost.rejected, (state, action) => {
+        state.error = action.error.message || "An error occurred.";
+      })
+
+      .addCase(fetchUpdatePublishPost.pending, () => {})
+      .addCase(fetchUpdatePublishPost.fulfilled, (state, action) => {
+        state.message = action.payload.message;
+      })
+      .addCase(fetchUpdatePublishPost.rejected, (state, action) => {
         state.error = action.error.message || "An error occurred.";
       })
 

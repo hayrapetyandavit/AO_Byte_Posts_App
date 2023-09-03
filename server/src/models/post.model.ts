@@ -7,6 +7,7 @@ export interface IPostModel extends Document {
   category: string;
   author: string;
   edited: boolean;
+  isPublic: boolean;
   totalRate: number;
   userId: string;
   createdAt: Date;
@@ -20,6 +21,7 @@ const postSchema = new mongoose.Schema(
     category: { type: String, required: true },
     author: { type: String, required: true },
     edited: { type: Boolean, default: false },
+    isPublic: { type: Boolean, default: false },
     totalRate: { type: Number, default: 0 },
     userId: { type: String, required: true },
   },

@@ -6,11 +6,13 @@ import {
   getPostsAuthorsService,
   getPostsByUserIdService,
   getPostsWithPaginationService,
+  updatePublishedPostService,
 } from "../../services/postService";
 import { PostType } from "../../types/postType";
 import { StateType } from "../../types/stateType";
 
 export const POSTS_WITH_PAGINATION_REQUEST = "POSTS_WITH_PAGINATION_REQUEST";
+export const FETCH_UPDATE_PUBLICH_POST = "FETCH_UPDATE_PUBLICH_POST";
 export const UPDATE_CURRENT_PAGE = "UPDATE_CURRENT_PAGE";
 export const FETCH_AUTHORS = "FETCH_AUTHORS";
 export const CREATE_POST = "CREATE_POST";
@@ -102,6 +104,23 @@ export const fetchUpdatePost = createAsyncThunk(
       data.id,
       auth.accessToken
     );
+    return response;
+  }
+);
+
+export const fetchUpdatePublishPost = createAsyncThunk(
+  "posts/fetchUpdatePublishPost",
+  async (data: { isPublic: boolean; id: string }, { dispatch, getState }) => {
+    dispatch({ type: UPDATE_POST });
+    const { auth } = getState() as StateType;
+
+    const response = await updatePublishedPostService(
+      data.isPublic,
+      auth.userId,
+      data.id,
+      auth.accessToken
+    );
+    
     return response;
   }
 );

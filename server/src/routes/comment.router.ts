@@ -6,6 +6,8 @@ import {
   getAllCommentsController,
   createCommentController,
   addRateToCommentController,
+  updateCommentController,
+  deleteCommentController,
 } from "../controllers/comment.controller";
 
 export default (app: Application) => {
@@ -17,6 +19,8 @@ export default (app: Application) => {
     next();
   });
   app.get("/comments", getAllCommentsController);
+  app.put("/comments/:id", verifyToken, updateCommentController);
+  app.delete("/comments/:id", verifyToken, deleteCommentController);
   app.post("/comments", verifyToken, createCommentController);
-  app.put("/comments/:commentId", verifyToken, addRateToCommentController);
+  app.patch("/comments/:commentId", verifyToken, addRateToCommentController);
 };

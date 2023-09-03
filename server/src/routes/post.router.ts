@@ -9,6 +9,7 @@ import {
   getPostsAuthorsController,
   getPostsByUserIdController,
   getPostsWithPaginationController,
+  updatePublishedPostController,
 } from "../controllers/post.controller";
 
 export default (app: Application) => {
@@ -26,4 +27,5 @@ export default (app: Application) => {
   app.put("/posts/:id", verifyToken, updatePostController);
   app.delete("/posts/:id", verifyToken, deletePostController);
   app.get("/posts/:userId", verifyToken, getPostsByUserIdController);
+  app.patch("/posts/:id", verifyToken, updatePublishedPostController);
 };

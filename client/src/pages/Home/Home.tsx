@@ -21,7 +21,6 @@ import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 import classes from "./style.module.scss";
 
-
 const Home: FC = () => {
   const { postsByUserId, currentPage, totalPages, error } = useSelector(
     (state: StateType) => state.posts
@@ -37,7 +36,6 @@ const Home: FC = () => {
     }
     dispatch(fetchAllComments());
   }, [dispatch, currentPage]);
-
   const getCommentsByPost = () => {
     const newObj = allComments.reduce(
       (result: { [postId: string]: CommentType[] }, item: CommentType) => {

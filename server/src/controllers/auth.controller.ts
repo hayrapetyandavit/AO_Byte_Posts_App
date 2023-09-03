@@ -29,7 +29,15 @@ export const loginController = async (req: Request, res: Response) => {
         maxAge: authConfig.jwtRefreshExpiration * 1000,
         sameSite: "strict",
       });
+      return res.status(200).send({
+        id: result.id,
+        name: result.name,
+        accessToken: result.accessToken,
+      });
     }
+    if (result.refreshToken) {
+    }
+
     res.status(200).send(result);
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
@@ -39,13 +47,18 @@ export const loginController = async (req: Request, res: Response) => {
 export const verifyLoginController = async (req: Request, res: Response) => {
   try {
     const result = await verifyLogin(req.body, req.params.token);
-    // if (result.refreshToken) {
-    //   res.cookie("refresh_token", result.refreshToken, {
-    //     httpOnly: true,
-    //     maxAge: authConfig.jwtRefreshExpiration * 1000,
-    //     sameSite: "strict",
-    //   });
-    // }
+    if (result.refreshToken) {
+      res.cookie("refresh_token", result.refreshToken, {
+        httpOnly: true,
+        maxAge: authConfig.jwtRefreshExpiration * 1000,
+        sameSite: "strict",
+      });
+      return res.status(200).send({
+        id: result.id,
+        name: result.name,
+        accessToken: result.accessToken,
+      });
+    }
     res.status(200).send(result);
   } catch (error: any) {}
 };

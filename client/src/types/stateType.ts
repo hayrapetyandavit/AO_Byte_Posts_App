@@ -31,6 +31,7 @@ export type StateType = {
     allComments: CommentType[];
     commentsByPost: { [key: string]: CommentType[] };
     commentsByParent: { [key: string]: CommentType[] };
+    message: string;
     error: string;
   };
 

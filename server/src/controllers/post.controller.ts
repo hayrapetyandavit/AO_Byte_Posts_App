@@ -6,6 +6,7 @@ import {
   createPost,
   updatePost,
   deletePost,
+  updatePublishedPost,
 } from "../services/post.service";
 
 import jwt from "jsonwebtoken";
@@ -60,10 +61,18 @@ export const updatePostController = async (req: Request, res: Response) => {
   try {
     const result = await updatePost(req.body, req.params.id);
 
-    const accessToken = req.cookies.access_token;
-    const decodedToken = jwt.verify(accessToken, authConfig.ACCESS_JWT_SECRET);
+    return res.status(200).send(result);
+  } catch (error) {
+    res.status(500).send({ message: "Failed to update post" });
+  }
+};
 
-    console.log(decodedToken);
+export const updatePublishedPostController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const result = await updatePublishedPost(req.body, req.params.id);
 
     return res.status(200).send(result);
   } catch (error) {

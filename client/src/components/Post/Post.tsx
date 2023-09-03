@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { genId } from "../../utils/genId";
@@ -9,7 +9,9 @@ import { StateType } from "../../types/stateType";
 import { notify } from "../../utils/notifyMessage";
 import {
   fetchDeletePost,
+  fetchPostsByUserId,
   fetchPostsWithPagination,
+  fetchUpdatePublishPost,
 } from "../../redux/actions/postsActions";
 import { AppThunkDispatch } from "../../redux/store";
 import { generateRateColor } from "../../utils/generateRateColor";
@@ -22,7 +24,6 @@ import AddComment from "../AddComment/AddComment";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 
 import classes from "./style.module.scss";
-
 
 interface IProps {
   handleCommentsSort?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -39,20 +40,26 @@ const Post: FC<IProps> = (props) => {
   const { commentsByPost } = useSelector((state: StateType) => state.comments);
 
   const [sortType, setSortType] = useState(false);
+  const [path, setPath] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [isShowModal, setShowModal] = useState(false);
   const [showSkeleton, setShowSkeleton] = useState(true);
   const [updateCdomments, setUpdateCdomments] = useState(commentsByPost);
 
+  const location = useLocation();
   const dispatch = useDispatch<AppThunkDispatch>();
 
   useEffect(() => {
     const skeletonTimer = setTimeout(() => {
       setShowSkeleton(false);
-    }, 800);
+    }, 400);
 
     return () => clearTimeout(skeletonTimer);
   }, [loading]);
+
+  useEffect(() => {
+    setPath(location.pathname);
+  }, [location]);
 
   const handleDeletePost = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const data = {
@@ -88,6 +95,26 @@ const Post: FC<IProps> = (props) => {
     }
   };
 
+  const handleInputCheck = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const data = {
+      isPublic: e.currentTarget.checked,
+      userId,
+      id: e.currentTarget.id,
+    };
+    await dispatch(fetchUpdatePublishPost(data));
+    await dispatch(fetchPostsByUserId());
+    await dispatch(fetchPostsWithPagination());
+
+    if (data.isPublic) {
+      notify("Post published successfully!");
+    } else {
+      notify("Post removed from public posts successfully!");
+    }
+    if (message === "Permission denied") {
+      notify(message);
+    }
+  };
+
   const onDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     handleDeletePost(e);
     setShowModal(false);
@@ -118,8 +145,16 @@ const Post: FC<IProps> = (props) => {
         <span className={classes.authorName} style={authorNameStyle}>
           {data.author} (author)
         </span>
-        {data.userId === userId ? (
+        {data.userId === userId && path === "/home" ? (
           <>
+            <input
+              id={data.id}
+              type="checkbox"
+              title="public/private"
+              className={classes.check}
+              checked={data.isPublic}
+              onChange={handleInputCheck}
+            />
             <Button
               value="&#10005;"
               onClick={() => setShowModal(true)}
@@ -145,7 +180,9 @@ const Post: FC<IProps> = (props) => {
         ) : null}
       </div>
       <h2 className={classes.title} title={data.title}>
-        {data.title!.length > 25 ? data.title?.slice(0, 1) + "..." : data.title}
+        {data.title!.length > 25
+          ? data.title?.slice(0, 15) + "..."
+          : data.title}
       </h2>
       <p className={classes.text}>{data.content}</p>
       <div className={classes.comments}>

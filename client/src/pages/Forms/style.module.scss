@@ -127,5 +127,14 @@
   .formWrapperRegister {
     width: 100%;
     height: 100vh;
+    gap: 17px;
+  }
+  .logo {
+    width: 100px;
+    height: 100px;
+    img {
+      width: 60px;
+      height: 60px;
+    }
   }
 }

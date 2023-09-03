@@ -41,7 +41,7 @@ export const addRateToCommentService = async (
   const response = await fetch(
     `${process.env.REACT_APP_API_URL}comments/${commentId}`,
     {
-      method: "PUT",
+      method: "PATCH",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
@@ -51,6 +51,56 @@ export const addRateToCommentService = async (
     }
   );
 
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
+  return response.json();
+};
+
+export const updateCommentService = async (
+  content: string,
+  userId: string,
+  id: string,
+  accessToken: string
+) => {
+  const response = await fetch(
+    `${process.env.REACT_APP_API_URL}comments/${id}`,
+    {
+      method: "PUT",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ userId, content }),
+    }
+  );
+
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
+  return response.json();
+};
+
+export const deleteCommentService = async (
+  userId: string,
+  id: string,
+  accessToken: string
+) => {
+  const response = await fetch(
+    `${process.env.REACT_APP_API_URL}comments/${id}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ userId }),
+    }
+  );
   if (!response.ok) {
     const errorMessage = await response.text();
     throw new Error(errorMessage);

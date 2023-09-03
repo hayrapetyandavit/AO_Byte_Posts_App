@@ -74,6 +74,10 @@ hr {
     height: 100%;
     padding: 2px 0 0 0;
   }
+  .check {
+    width: 30px;
+    cursor: pointer;
+  }
 }
 
 .title {
@@ -122,7 +126,6 @@ hr {
     width: 100%;
   }
   .deletePost {
-    // bottom: 150px;
     right: 20px;
   }
 }
@@ -132,9 +135,8 @@ hr {
     border: none;
   }
   .deletePost {
-    .authorName {
-      display: none;
-    }
+    top: -8px;
+    right: 0;
   }
 }
 
@@ -144,6 +146,9 @@ hr {
       width: 30px;
       height: 100%;
       padding: 2px 0 0 0;
+    }
+    .authorName {
+      display: none;
     }
   }
 }

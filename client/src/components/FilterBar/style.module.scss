@@ -174,7 +174,12 @@
     }
   }
 }
+
 @media (max-width: 393.98px) {
+  .content,
+  .darkContent {
+    width: 50%;
+  }
   .avatar,
   .darkAvatar {
     left: 70%;
