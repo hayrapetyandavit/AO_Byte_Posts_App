@@ -49,6 +49,7 @@ const AddPost: FC = () => {
     await dispatch(fetchCreatePost(data));
     scrollToTop();
     await dispatch(fetchPostsByUserId());
+    window.location.reload();
   };
 
   const darkModeStyle = {
