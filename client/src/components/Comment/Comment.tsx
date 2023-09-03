@@ -41,9 +41,6 @@ const Comment: FC<IProps> = (props) => {
   const [isEditMode, setEditMode] = useState(false);
   const [isShowModal, setShowModal] = useState(false);
 
-  const authorNameStyle =
-    theme === "dark" ? { background: "transparent" } : undefined;
-
   const handleDeleteComment = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -121,6 +118,11 @@ const Comment: FC<IProps> = (props) => {
     );
   };
 
+  const authorNameStyle =
+    theme === "dark" ? { background: "transparent" } : undefined;
+
+  const commentWrappStyle = theme === "dark" ? { color: "#fff" } : undefined;
+
   return (
     <>
       {comments[id] &&
@@ -128,7 +130,10 @@ const Comment: FC<IProps> = (props) => {
           if (comment.postId === id && !comment.parentId) {
             return (
               <div className={classes.commentWrapp} key={genId()}>
-                <div className={classes.commentContent}>
+                <div
+                  className={classes.commentContent}
+                  style={commentWrappStyle}
+                >
                   <div
                     className={classes.comment}
                     style={comment.edited ? { minHeight: "64px" } : undefined}
@@ -153,7 +158,11 @@ const Comment: FC<IProps> = (props) => {
                 {commentsByParent[comment.id] &&
                   commentsByParent[comment.id].map((replyComment) => {
                     return (
-                      <div className={classes.commentContent} key={genId()}>
+                      <div
+                        className={classes.commentContent}
+                        style={commentWrappStyle}
+                        key={genId()}
+                      >
                         <div
                           className={classes.nestedComment}
                           style={

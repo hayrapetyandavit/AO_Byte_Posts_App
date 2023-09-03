@@ -75,6 +75,7 @@ const Post: FC<IProps> = (props) => {
     if (error) {
       notify(error);
     }
+    await dispatch(fetchPostsByUserId());
     await dispatch(fetchPostsWithPagination());
   };
 

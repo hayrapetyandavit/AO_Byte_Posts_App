@@ -14,7 +14,7 @@ import classes from "../style.module.scss";
 
 
 const Register: FC = () => {
-  const { message, error } = useSelector((state: StateType) => state.auth);
+  const { error } = useSelector((state: StateType) => state.auth);
 
   const [fieldValidity, setFieldValidity] = useState({
     isNameValid: true,
@@ -79,7 +79,7 @@ const Register: FC = () => {
       registerUserAction({ name, email, password, confirmPassword })
     );
 
-    if (!error && !message) {
+    if (!error) {
       navigate("/login");
     }
   };

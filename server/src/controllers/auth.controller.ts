@@ -35,9 +35,6 @@ export const loginController = async (req: Request, res: Response) => {
         accessToken: result.accessToken,
       });
     }
-    if (result.refreshToken) {
-    }
-
     res.status(200).send(result);
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
