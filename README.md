@@ -14,7 +14,7 @@ $ yarn install
 $ yarn dev
 ```
 
-Can be us for testing:
+Can be used for testing:
 
 ```
 forduoenglish1@gmail.com
