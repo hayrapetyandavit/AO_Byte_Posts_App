@@ -58,7 +58,7 @@ export const createComment = async (body: IReqBody) => {
 };
 
 export const addRateToComment = async (body: any, commentId: string) => {
-  const { rate } = body;
+  const { rate, userId } = body;
   const comment = await CommentModel.findById(commentId);
 
   if (!comment) {

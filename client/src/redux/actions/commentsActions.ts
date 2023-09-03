@@ -71,7 +71,8 @@ export const fetchAddRateToComment = createAsyncThunk(
     const response = await addRateToCommentService(
       data.rate,
       data.commentId,
-      auth.accessToken
+      auth.accessToken,
+      auth.userId
     );
 
     return response;

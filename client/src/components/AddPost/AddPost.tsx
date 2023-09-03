@@ -10,13 +10,12 @@ import { notify } from "../../utils/notifyMessage";
 import { AppThunkDispatch } from "../../redux/store";
 import { scrollToTop } from "../../utils/scrollToTop";
 import { useInputChange } from "../../hooks/useInputCHange";
-import { categoriesMockData } from "../../constants/constants";
+import { SelectCategoriesMockData } from "../../constants/constants";
 
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 
 import classes from "./style.module.scss";
-
 
 const AddPost: FC = () => {
   const theme = useSelector((state: StateType) => state.theme.theme);
@@ -105,7 +104,7 @@ const AddPost: FC = () => {
           <option value="" disabled hidden>
             Categories
           </option>
-          {categoriesMockData.map((category) => (
+          {SelectCategoriesMockData.map((category) => (
             <option value={category} key={category}>
               {category}
             </option>

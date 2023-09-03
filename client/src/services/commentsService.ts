@@ -36,6 +36,7 @@ export const createCommentService = async (
 export const addRateToCommentService = async (
   rate: number,
   commentId: string,
+  userId: string,
   accessToken: string
 ) => {
   const response = await fetch(
@@ -47,7 +48,7 @@ export const addRateToCommentService = async (
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({ rate }),
+      body: JSON.stringify({ rate, userId }),
     }
   );
 
